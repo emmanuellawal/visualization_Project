@@ -1,0 +1,12 @@
+{
+  "name": "visualization_project",
+  "version": "1.0.0",
+  "description": "Thirty Years of Change: Correlating Homelessness Trends with Shifts in the Cost of Living",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

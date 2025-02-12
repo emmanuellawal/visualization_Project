@@ -1,20 +1,19 @@
-# Thirty Years of Change: Correlating Homelessness Trends with Shifts in the Cost of Living
+# Three Decades of Mobility and Economics: Comparing Motor Vehicle Registration with Shifts in the Cost of Living
 
 ## Overview
 
-This project examines the relationship between homelessness trends and changes in the cost of living over the past three decades. By analyzing historical data from government sources—including homelessness counts and Consumer Price Index (CPI) figures—we aim to uncover correlations that highlight how economic pressures have influenced homelessness rates.
+This project investigates the relationship between trends in motor vehicle registration and changes in the cost of living over the past 30 years. By merging historical data on annual motor vehicle registrations with economic indicators (such as the Consumer Price Index), this project aims to reveal how shifts in mobility and vehicle ownership relate to broader economic trends and living expenses.
 
 ## Data Sources
 
-### Cost of Living Data
-- **Consumer Price Index (CPI-U):**  
-  Data is sourced from the U.S. Bureau of Labor Statistics (BLS). Monthly CPI-U data for the U.S. city average is available in CSV format from the BLS data repository. These values can be aggregated into annual averages.
-  - [BLS CPI Data Repository](https://www.bls.gov/cpi/data.htm)
+### Motor Vehicle Registration Data
+- **Source:** U.S. Department of Transportation and state-level Departments of Motor Vehicles (DMVs) provide data on motor vehicle registrations.
+- **Format:** Many datasets are available in machine‐readable formats (CSV or JSON).
+- **Example:** The Federal Highway Administration (FHWA) publishes annual vehicle registration and travel statistics that can serve as a proxy for trends in vehicle ownership.
 
-### Homelessness Data
-- **Annual Homeless Assessment Report (AHAR):**  
-  Homelessness count data is available via datasets published on Data.gov and local government portals. These datasets provide annual Point-in-Time (PIT) counts and other key indicators.
-  - [Data.gov: AHAR Datasets](https://catalog.data.gov/dataset/?q=homelessness&sort=views_recent+desc&groups=local&res_format=JSON&ext_location=&ext_bbox=&ext_prev_extent=&tags=homelessness)
+### Cost of Living Data
+- **Source:** The U.S. Bureau of Labor Statistics (BLS) publishes the Consumer Price Index (CPI) for All Urban Consumers. In particular, the CPI for Rent of Primary Residence (or similar housing-related indices) can be used to gauge shifts in the cost of living.
+- **Format:** Data can be downloaded in CSV or JSON format (e.g., via FRED at the Federal Reserve Bank of St. Louis).
 
 ## Features
 
@@ -22,7 +21,10 @@ This project examines the relationship between homelessness trends and changes i
   Compute annual averages from monthly CPI data to track changes in the cost of living over the past 30 years.
   
 - **Correlation Study:**  
-  Merge the CPI data with annual homelessness data to explore the correlation between economic shifts and homelessness trends.
+  Merge the CPI data with annual motor vehicle registration data to explore the correlation between economic shifts and registration trends through an interactive line graph.
+  
+  - **Dual-Axis Line Graph:**  
+  Plot two time series—annual motor vehicle registration counts on one y-axis and the cost of living index on the other—with the x-axis representing time (years). This layout facilitates direct visual comparison of trends.
   
 - **Interactive Visualizations:**  
   Build an interactive dashboard using React and charting libraries (such as D3.js or Chart.js) to allow users to explore the data trends dynamically.

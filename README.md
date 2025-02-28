@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project investigates the relationship between trends in motor vehicle registration and changes in the cost of living over the past 30 years. By merging historical data on annual motor vehicle registrations with economic indicators (such as the Consumer Price Index), this project aims to reveal how shifts in mobility and vehicle ownership relate to broader economic trends and living expenses.
+This project investigates the relationship between trends in motor vehicle registration and changes in the cost of living over the past 30 years. This visualization addresses the question: Do areas with higher housing costs show different patterns of vehicle ownership? By merging historical data on annual motor vehicle registrations with economic indicators (such as the Consumer Price Index), this project aims to reveal how shifts in mobility and vehicle ownership relate to broader economic trends and living expenses.
 
 ## Data Sources
 

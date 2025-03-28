@@ -93,7 +93,8 @@ const ScatterPlotChart: React.FC<ScatterPlotProps> = ({ housingData, vehicleData
     // Add X axis with improved spacing and font size
     svg.append("g")
       .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(xScale))
+      .call(d3.axisBottom(xScale)
+        .tickFormat((domainValue: d3.NumberValue, _: number) => domainValue.toString()))
       .selectAll("text")
       .attr("transform", "rotate(-45)")
       .attr("dy", "1.5em")
@@ -136,7 +137,7 @@ const ScatterPlotChart: React.FC<ScatterPlotProps> = ({ housingData, vehicleData
       .attr("stroke", "white")
       .attr("stroke-width", 1)
       .append("title")
-      .text(d => `Year: ${d.year}\nHousing Index: ${d.housingIndex.toLocaleString()}\nAutos: ${d.autoRegistrations.toLocaleString()}`);
+      .text(d => `Year: ${d.year}\nHousing Index: ${d.housingIndex.toLocaleString()} (Base 2000 = 100)\nVehicle Registrations: ${d.autoRegistrations.toLocaleString()} vehicles`);
     
     // Add title with improved spacing and size
     svg.append("text")
@@ -146,7 +147,7 @@ const ScatterPlotChart: React.FC<ScatterPlotProps> = ({ housingData, vehicleData
       .style("font-size", "22px")
       .style("font-weight", "bold")
       .style("fill", "white")
-      .text("Housing Index vs Auto Registrations");
+      .text("Housing Cost Index vs Vehicle Registrations (1994-2020)");
     
     // Add X axis label with improved spacing
     svg.append("text")
@@ -155,7 +156,7 @@ const ScatterPlotChart: React.FC<ScatterPlotProps> = ({ housingData, vehicleData
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("fill", "white")
-      .text("Housing Index");
+      .text("Housing Cost Index (Base Year 2000 = 100)");
     
     // Add Y axis label with improved spacing
     svg.append("text")
@@ -165,7 +166,7 @@ const ScatterPlotChart: React.FC<ScatterPlotProps> = ({ housingData, vehicleData
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("fill", "white")
-      .text("Auto Registrations");
+      .text("Number of Vehicle Registrations");
     
     // Add a color legend for years with improved spacing and position
     const legendWidth = 300;
@@ -228,6 +229,15 @@ const ScatterPlotChart: React.FC<ScatterPlotProps> = ({ housingData, vehicleData
       .attr("y", legendY + legendHeight + 20)
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
+      .style("fill", "white")
+      .text("Year");
+    
+    // Add legend title
+    svg.append("text")
+      .attr("x", legendX + legendWidth / 2)
+      .attr("y", legendY - 10)
+      .attr("text-anchor", "middle")
+      .style("font-size", "14px")
       .style("fill", "white")
       .text("Year");
     

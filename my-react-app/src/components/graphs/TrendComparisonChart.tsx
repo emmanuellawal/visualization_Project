@@ -2,6 +2,12 @@ import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import intersection from 'lodash/intersection';
 
+interface TrendData {
+  year: number;
+  housingIndex: number;
+  rentIndex: number;
+}
+
 interface TrendComparisonProps {
   housingData: any[];
   rentData: any[];
@@ -22,7 +28,7 @@ const TrendComparisonChart: React.FC<TrendComparisonProps> = ({ housingData, ren
       rentData.map(d => d.Year)
     );
     
-    const data = years.map(year => {
+    const data: TrendData[] = years.map(year => {
       const housing = housingData.find(d => d.Year === year);
       const rent = rentData.find(d => d.Year === year);
       return {
@@ -39,18 +45,18 @@ const TrendComparisonChart: React.FC<TrendComparisonProps> = ({ housingData, ren
     
     // Create scales
     const xScale = d3.scaleLinear()
-      .domain(d3.extent(data, d => d.year))
+      .domain([d3.min(data, d => d.year) || 1994, d3.max(data, d => d.year) || 2020])
       .range([0, width]);
     
     const yScale = d3.scaleLinear()
       .domain([
         Math.min(
-          d3.min(data, d => d.housingIndex),
-          d3.min(data, d => d.rentIndex)
+          d3.min(data, d => d.housingIndex) || 0,
+          d3.min(data, d => d.rentIndex) || 0
         ) * 0.9,
         Math.max(
-          d3.max(data, d => d.housingIndex),
-          d3.max(data, d => d.rentIndex)
+          d3.max(data, d => d.housingIndex) || 100,
+          d3.max(data, d => d.rentIndex) || 100
         ) * 1.1
       ])
       .range([height, 0]);
@@ -70,7 +76,7 @@ const TrendComparisonChart: React.FC<TrendComparisonProps> = ({ housingData, ren
       .call(
         d3.axisBottom(xScale)
           .tickSize(-height)
-          .tickFormat("")
+          .tickFormat((_: d3.NumberValue, __: number) => "")
       )
       .selectAll("line")
       .style("stroke", "#555")
@@ -81,7 +87,7 @@ const TrendComparisonChart: React.FC<TrendComparisonProps> = ({ housingData, ren
       .call(
         d3.axisLeft(yScale)
           .tickSize(-width)
-          .tickFormat("")
+          .tickFormat((_: d3.NumberValue, __: number) => "")
       )
       .selectAll("line")
       .style("stroke", "#555")
@@ -90,7 +96,8 @@ const TrendComparisonChart: React.FC<TrendComparisonProps> = ({ housingData, ren
     // Add X axis with improved spacing
     svg.append("g")
       .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(xScale).tickFormat(d3.format("d")))
+      .call(d3.axisBottom(xScale)
+        .tickFormat((domainValue: d3.NumberValue, _: number) => Math.round(domainValue.valueOf()).toString()))
       .selectAll("text")
       .attr("transform", "rotate(-45)")
       .attr("dy", "1.5em")
@@ -107,13 +114,14 @@ const TrendComparisonChart: React.FC<TrendComparisonProps> = ({ housingData, ren
     
     // Add Y axis with improved font size
     svg.append("g")
-      .call(d3.axisLeft(yScale))
+      .call(d3.axisLeft(yScale)
+        .tickFormat((domainValue: d3.NumberValue, _: number) => domainValue.valueOf().toString()))
       .selectAll("text")
       .style("font-size", "14px")
       .style("fill", "white");
     
     // Add housing index line
-    const housingLine = d3.line()
+    const housingLine = d3.line<TrendData>()
       .x(d => xScale(d.year))
       .y(d => yScale(d.housingIndex));
     
@@ -135,10 +143,10 @@ const TrendComparisonChart: React.FC<TrendComparisonProps> = ({ housingData, ren
       .attr("r", 5)
       .attr("fill", "#4dabf7")
       .append("title")
-      .text(d => `Year: ${d.year}\nHousing Index: ${d.housingIndex}`);
+      .text(d => `Year: ${d.year}\nHousing Cost Index: ${d.housingIndex.toLocaleString()} (Base 2000 = 100)`);
     
     // Add rent index line
-    const rentLine = d3.line()
+    const rentLine = d3.line<TrendData>()
       .x(d => xScale(d.year))
       .y(d => yScale(d.rentIndex));
     
@@ -160,7 +168,7 @@ const TrendComparisonChart: React.FC<TrendComparisonProps> = ({ housingData, ren
       .attr("r", 5)
       .attr("fill", "#51cf66")
       .append("title")
-      .text(d => `Year: ${d.year}\nRent Index: ${d.rentIndex}`);
+      .text(d => `Year: ${d.year}\nRent Index: ${d.rentIndex.toLocaleString()} (Base 2000 = 100)`);
     
     // Add title with improved spacing and size
     svg.append("text")
@@ -170,7 +178,7 @@ const TrendComparisonChart: React.FC<TrendComparisonProps> = ({ housingData, ren
       .style("font-size", "22px")
       .style("font-weight", "bold")
       .style("fill", "white")
-      .text("Housing Index vs Rent Index");
+      .text("Housing Cost Index vs Rent Index Trends (1994-2020)");
     
     // Add X axis label with improved spacing
     svg.append("text")
@@ -189,50 +197,46 @@ const TrendComparisonChart: React.FC<TrendComparisonProps> = ({ housingData, ren
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("fill", "white")
-      .text("Index Value");
+      .text("Index Value (Base Year 2000 = 100)");
     
-    // Add legend with improved spacing and visibility - moved below the graph
+    // Add legend with improved spacing and visibility
     const legend = svg.append("g")
-      .attr("transform", `translate(${width/2 - 85}, ${height + 60})`); // Centered below the graph
+      .attr("transform", `translate(${width/2 - 100}, ${height + 60})`);
     
     // Add background rectangle for better visibility
     legend.append("rect")
       .attr("x", -10)
-      .attr("y", -5)
-      .attr("width", 170)
-      .attr("height", 75)
+      .attr("y", -10)
+      .attr("width", 220)
+      .attr("height", 50)
       .attr("fill", "#444")
-      .attr("stroke", "#777")
       .attr("rx", 5);
     
-    legend.append("rect")
-      .attr("x", 0)
-      .attr("y", 10)
-      .attr("width", 20)
-      .attr("height", 20)
-      .attr("fill", "#4dabf7");
-    
-    legend.append("text")
-      .attr("x", 30)
-      .attr("y", 25)
-      .style("font-size", "14px")
-      .style("fill", "white")
-      .text("Housing Index");
-    
-    legend.append("rect")
-      .attr("x", 0)
-      .attr("y", 40)
-      .attr("width", 20)
-      .attr("height", 20)
-      .attr("fill", "#51cf66");
-    
-    legend.append("text")
-      .attr("x", 30)
-      .attr("y", 55)
-      .style("font-size", "14px")
-      .style("fill", "white")
-      .text("Rent Index");
-    
+    // Add legend items
+    const legendData = [
+      { label: "Housing Cost Index", color: "#4dabf7" },
+      { label: "Rent Index", color: "#51cf66" }
+    ];
+
+    legendData.forEach((d, i) => {
+      const g = legend.append("g")
+        .attr("transform", `translate(0, ${i * 20})`);
+      
+      g.append("line")
+        .attr("x1", 0)
+        .attr("x2", 20)
+        .attr("y1", 5)
+        .attr("y2", 5)
+        .attr("stroke", d.color)
+        .attr("stroke-width", 3);
+      
+      g.append("text")
+        .attr("x", 30)
+        .attr("y", 10)
+        .style("fill", "white")
+        .style("font-size", "14px")
+        .text(d.label + " (Base 2000 = 100)");
+    });
   }, [housingData, rentData]);
   
   return (

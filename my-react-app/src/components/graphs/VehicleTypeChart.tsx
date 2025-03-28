@@ -1,8 +1,15 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 
+interface VehicleData {
+  year: number;
+  state: string;
+  Auto: number;
+  Motorcycle: number;
+}
+
 interface VehicleTypeProps {
-  vehicleData: any[];
+  vehicleData: VehicleData[];
   activeState: string;
 }
 
@@ -26,7 +33,7 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
     const height = 500 - margin.top - margin.bottom;
     
     // Create scales
-    const xScale = d3.scaleBand()
+    const xScale = d3.scaleBand<number>()
       .domain(stateData.map(d => d.year))
       .range([0, width])
       .padding(0.1);
@@ -40,7 +47,7 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
       .range([height, 0]);
     
     // Create color scale
-    const colorScale = d3.scaleOrdinal()
+    const colorScale = d3.scaleOrdinal<string>()
       .domain(['Auto', 'Motorcycle'])
       .range(['#4dabf7', '#ffa94d']);
     
@@ -59,7 +66,7 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
       .call(
         d3.axisBottom(xScale)
           .tickSize(-height)
-          .tickFormat("")
+          .tickFormat((_: number, __: number) => "")
       )
       .selectAll("line")
       .style("stroke", "#555")
@@ -70,7 +77,7 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
       .call(
         d3.axisLeft(yScale)
           .tickSize(-width)
-          .tickFormat("")
+          .tickFormat((_: d3.NumberValue, __: number) => "")
       )
       .selectAll("line")
       .style("stroke", "#555")
@@ -86,7 +93,7 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(xScale)
         .tickValues(yearsToShow)
-        .tickFormat(d3.format("d")))
+        .tickFormat((d: number) => d.toString()))
       .selectAll("text")
       .attr("transform", "rotate(-45)")
       .attr("dy", "1.5em")
@@ -105,11 +112,12 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
     svg.append("g")
       .call(d3.axisLeft(yScale)
         .tickValues([100000, 250000, 500000, 1000000, 2500000, 5000000, 7500000])
-        .tickFormat(d => {
-          if (d >= 1000000) {
-            return d3.format(".1f")(d / 1000000) + "M";
+        .tickFormat((domainValue: d3.NumberValue, _: number) => {
+          const value = domainValue.valueOf();
+          if (value >= 1000000) {
+            return d3.format(".1f")(value / 1000000) + "M";
           }
-          return d3.format(",")(d);
+          return d3.format(",")(value);
         }))
       .selectAll("text")
       .style("font-size", "14px")
@@ -122,13 +130,16 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
       .attr("x", -height / 2)
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
-      .text("Auto Registrations");
+      .text("Number of Auto Registrations");
     
     // Add Y axis for Motorcycle with improved font size
     svg.append("g")
       .attr("transform", `translate(${width}, 0)`)
       .call(d3.axisRight(y2Scale)
-        .tickFormat(d => d3.format(".2s")(d)))
+        .tickFormat((domainValue: d3.NumberValue, _: number) => {
+          const value = domainValue.valueOf();
+          return d3.format(".2s")(value);
+        }))
       .selectAll("text")
       .style("font-size", "14px")
       .style("fill", "white");
@@ -140,11 +151,11 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
       .attr("x", -height / 2)
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
-      .text("Motorcycle Registrations");
+      .text("Number of Motorcycle Registrations");
     
     // Add Auto line with improved width
-    const autoLine = d3.line()
-      .x(d => xScale(d.year) + xScale.bandwidth() / 2)
+    const autoLine = d3.line<VehicleData>()
+      .x(d => (xScale(d.year) || 0) + xScale.bandwidth() / 2)
       .y(d => yScale(d.Auto));
     
     svg.append("path")
@@ -160,18 +171,18 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
       .enter()
       .append("circle")
       .attr("class", "auto-dot")
-      .attr("cx", d => xScale(d.year) + xScale.bandwidth() / 2)
+      .attr("cx", d => (xScale(d.year) || 0) + xScale.bandwidth() / 2)
       .attr("cy", d => yScale(d.Auto))
       .attr("r", 6)
       .attr("fill", colorScale('Auto'))
       .attr("stroke", "white")
       .attr("stroke-width", 1)
       .append("title")
-      .text(d => `Year: ${d.year}\nAuto: ${d.Auto.toLocaleString()}`);
+      .text(d => `Year: ${d.year}\nAuto: ${d.Auto.toLocaleString()} vehicles`);
     
     // Add Motorcycle line with improved width
-    const motorcycleLine = d3.line()
-      .x(d => xScale(d.year) + xScale.bandwidth() / 2)
+    const motorcycleLine = d3.line<VehicleData>()
+      .x(d => (xScale(d.year) || 0) + xScale.bandwidth() / 2)
       .y(d => y2Scale(d.Motorcycle));
     
     svg.append("path")
@@ -187,14 +198,14 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
       .enter()
       .append("circle")
       .attr("class", "motorcycle-dot")
-      .attr("cx", d => xScale(d.year) + xScale.bandwidth() / 2)
+      .attr("cx", d => (xScale(d.year) || 0) + xScale.bandwidth() / 2)
       .attr("cy", d => y2Scale(d.Motorcycle))
       .attr("r", 6)
       .attr("fill", colorScale('Motorcycle'))
       .attr("stroke", "white")
       .attr("stroke-width", 1)
       .append("title")
-      .text(d => `Year: ${d.year}\nMotorcycle: ${d.Motorcycle.toLocaleString()}`);
+      .text(d => `Year: ${d.year}\nMotorcycle: ${d.Motorcycle.toLocaleString()} vehicles`);
     
     // Add title with improved spacing and size
     svg.append("text")
@@ -204,7 +215,7 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
       .style("font-size", "22px")
       .style("font-weight", "bold")
       .style("fill", "white")
-      .text(`${activeState} Vehicle Registrations`);
+      .text(`${activeState} Vehicle Registrations (1994-2020)`);
     
     // Add X axis label with improved spacing
     svg.append("text")
@@ -215,9 +226,9 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
       .style("fill", "white")
       .text("Year");
     
-    // Add legend with improved spacing and visibility - moved below the graph
+    // Add legend with improved spacing and visibility
     const legend = svg.append("g")
-      .attr("transform", `translate(${width/2 - 85}, ${height + 60})`); // Centered below the graph
+      .attr("transform", `translate(${width/2 - 85}, ${height + 60})`);
     
     // Add background rectangle for better visibility
     legend.append("rect")
@@ -266,4 +277,4 @@ const VehicleTypeChart: React.FC<VehicleTypeProps> = ({ vehicleData, activeState
   );
 };
 
-export default VehicleTypeChart; 
+export default VehicleTypeChart;

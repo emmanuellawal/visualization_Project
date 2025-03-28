@@ -10,12 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "d3": "^7.8.5",
+    "@types/d3": "^7.4.3",
+    "@types/lodash": "^4.17.16",
+    "axios": "^1.6.7",
     "chart.js": "^4.4.1",
+    "d3": "^7.9.0",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
-    "axios": "^1.6.7"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

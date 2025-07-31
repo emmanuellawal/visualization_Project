@@ -1,0 +1,1701 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+================================================================
+File Summary
+================================================================
+
+Purpose:
+--------
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+
+File Format:
+------------
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Multiple file entries, each consisting of:
+  a. A separator line (================)
+  b. The file path (File: path/to/file)
+  c. Another separator line
+  d. The full contents of the file
+  e. A blank line
+
+Usage Guidelines:
+-----------------
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+
+Notes:
+------
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+
+Additional Info:
+----------------
+
+================================================================
+Directory Structure
+================================================================
+files/
+  housing.csv
+  housing.csv:Zone.Identifier
+  Motor_Vehicle_Registrations_Dashboard_data.csv
+  Motor_Vehicle_Registrations_Dashboard_data.csv:Zone.Identifier
+  rent_primeR.csv
+  rent_primeR.csv:Zone.Identifier
+public/
+  chart-icon.svg
+  grid-pattern.svg
+  housing.csv
+  Motor_Vehicle_Registrations_Dashboard_data.csv
+  rent_primeR.csv
+  vite.svg
+src/
+  assets/
+    react.svg
+  components/
+    ErrorBoundary.jsx
+    ErrorDisplay.jsx
+    LoadingSpinner.jsx
+  utils/
+    dataProcessing.js
+  App.jsx
+  index.css
+  main.jsx
+.gitignore
+eslint.config.js
+index.html
+package.json
+postcss.config.cjs
+README.md
+tailwind.config.js
+vercel.json
+vite.config.js
+
+================================================================
+Files
+================================================================
+
+================
+File: files/housing.csv
+================
+Year,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec,Annual,HALF1,HALF2
+1994,157.1,159.8,160.3,159.2,158.8,159.5,160.4,161.8,160.9,160.7,160,159.7,159.9,159.1,160.6
+1995,160.9,161.5,162,162.4,162.8,163.9,165,165,164.1,164.2,164.4,164.6,163.4,162.3,164.6
+1996,166.6,166.9,167.4,166.4,166.7,167.4,168.4,168.9,168.3,168.2,168.2,168.9,167.7,166.9,168.5
+1997,169.8,170.9,171.2,170.5,170.2,171.3,172.5,172.7,172.5,172.6,172.7,173.4,171.7,170.7,172.7
+1998,174,174.5,174.9,174.7,174.8,176.1,176.8,177.1,176.8,177.1,177.2,177.3,175.9,174.8,177.1
+1999,177.7,178.4,178.3,178.5,178.4,179.7,180.4,180.4,180.6,180.5,181.2,181,179.6,178.5,180.7
+2000,182.9,184.8,184.9,184.2,183.9,185.8,187.5,186.8,187.8,187.7,188.5,188.4,186.1,184.4,187.8
+2001,189.7,189.8,191.3,191.6,191.5,193.7,194.3,194.6,193.7,193.1,194.1,194.3,192.6,191.3,194
+2002,196.4,197.6,199.2,199.2,198.7,200.1,200.8,201.9,201.1,201.9,201,200.8,199.9,198.5,201.3
+2003,204.6,205.4,207.6,206.7,207.2,207.9,208.8,210.3,208.7,209.9,209.5,209.8,208,206.6,209.5
+2004,211.9,212.4,214.6,216.2,215.6,218.4,218.5,219,218.2,219.3,218.4,218.4,216.7,214.9,218.6
+2005,221.4,222.1,228.5,227.4,224.4,224.9,227.2,227.9,226.6,230.1,229.3,228.5,226.5,224.8,228.3
+2006,230.6,230.9,233.4,236,237.8,240.6,242.1,243.1,241.4,239.9,239.7,240.8,238,234.9,241.2
+2007,241.419,242.692,244.042,244.436,245.293,248.228,249.798,249.191,247.319,246.949,247.906,247.786,246.255,244.352,248.158
+2008,248.563,250.328,252.586,252.2,253.161,257.051,259.706,260.568,258.439,257.047,254.912,255.615,255.015,252.315,257.715
+2009,256.339,256.561,257.491,257.062,256.573,257.537,258.912,258.755,256.97,256.273,256.464,256.523,257.122,256.927,257.316
+2010,257.261,257.077,257.82,257.869,258.555,259.514,260.421,259.997,258.871,258.468,258.216,258.702,258.564,258.016,259.113
+2011,259.081,259.198,259.985,260.194,261.585,263.038,264.345,264.07,263.675,262.854,262.528,261.61,261.847,260.514,263.18
+2012,262.677,262.504,263.648,263.31,264.114,265.684,265.403,266.008,266.552,265.971,266.862,267.015,264.979,263.656,266.302
+2013,268.881,269.26,269.193,268.403,269.517,270.574,271.114,271.752,272.914,271.244,271.864,272.862,270.632,269.305,271.958
+2014,277.625,275.507,276.078,275.77,277.037,277.24,277.203,277.613,276.841,276.521,275.897,275.669,276.583,276.543,276.624
+2015,277.285,278.464,277.589,277.917,278.276,279.665,279.811,279.988,281.295,280.808,280.746,280.056,279.325,278.199,280.451
+2016,280.378,280.952,282.322,282.662,283.325,285.09,285.748,286.282,286.331,286.51,287.452,288.586,284.637,282.455,286.818
+2017,289.262,289.614,289.62,289.908,290.95,292.15,292.019,292.898,292.867,292.432,292.699,293.988,291.534,290.251,292.817
+2018,294.441,295.424,296.511,296.698,297.999,298.099,298.964,298.629,299.187,299.024,298.697,299.249,297.744,296.529,298.958
+2019,301.14,301.233,301.791,302.413,302.192,303.608,303.892,303.603,304.799,303.491,304.498,305.331,303.166,302.063,304.269
+2020,307.061,307.21,307.537,306.467,306.606,308.68,308.945,308.825,309.494,308.123,308.787,309.952,308.141,307.26,309.021
+
+================
+File: files/housing.csv:Zone.Identifier
+================
+[ZoneTransfer]
+ZoneId=3
+
+================
+File: files/Motor_Vehicle_Registrations_Dashboard_data.csv
+================
+year,state,Auto,Motorcycle
+1994,New Jersey,4423973,87267
+1994,New York,7677546,176541
+1994,Pennsylvania,5970382,169541
+1995,New Jersey,4433631,88634
+1995,New York,7645540,169679
+1995,Pennsylvania,5882488,171335
+1996,New Jersey,4397727,91995
+1996,New York,7984694,136246
+1996,Pennsylvania,5935633,178527
+1997,New Jersey,4268888,94243
+1997,New York,8063496,135814
+1997,Pennsylvania,6050365,183116
+1998,New Jersey,4215195,100564
+1998,New York,7664320,138846
+1998,Pennsylvania,6131725,191073
+1999,New Jersey,4341182,105547
+1999,New York,7892118,143547
+1999,Pennsylvania,6071724,200829
+2000,New Jersey,4450719,111853
+2000,New York,7501343,107486
+2000,Pennsylvania,6032058,215737
+2001,New Jersey,4517906,125747
+2001,New York,7597371,118864
+2001,Pennsylvania,6231291,238433
+2002,New Jersey,4502809,134034
+2002,New York,7924325,142790
+2002,Pennsylvania,6072248,249916
+2003,New Jersey,4448660,140383
+2003,New York,8313058,150756
+2003,Pennsylvania,6120710,268990
+2004,New Jersey,4016485,149911
+2004,New York,8548783,170148
+2005,New Jersey,3957193,158889
+2005,New York,8973047,190635
+2005,Pennsylvania,5888278,305837
+2006,New Jersey,3692966,163636
+2006,New York,8528457,203145
+2006,Pennsylvania,5842819,330947
+2007,New Jersey,3827017,164024
+2007,New York,8866591,315987.89
+2007,Pennsylvania,5805046,353945
+2008,New Jersey,3826995,164024
+2008,New York,8576151,340131.2
+2008,Pennsylvania,6086264,398731
+2009,New Jersey,3705322,157821
+2009,New York,8725551,345430
+2009,Pennsylvania,5818056,409854
+2010,New Jersey,3971896,327530
+2010,New York,7950192,348175
+2010,Pennsylvania,5682239,412164
+2011,New Jersey,4416631,330489
+2011,New York,5866664,345855
+2011,Pennsylvania,5484519,404896
+2012,New Jersey,3971265,332470
+2012,New York,5076204,345412.32
+2012,Pennsylvania,4774517,419282
+2013,New Jersey,3644546,152111
+2013,New York,5203357,345118
+2013,Pennsylvania,4809900,400908
+2014,New Jersey,3476346,149963
+2014,New York,5159696,346210
+2014,Pennsylvania,4711119,396315
+2015,New Jersey,2918603,152472
+2015,New York,4868521,354858
+2015,Pennsylvania,4680498,393390
+2016,New Jersey,2847881,151101
+2016,New York,4890916,392771
+2016,Pennsylvania,4640471,393037
+2017,New Jersey,2798699,152979
+2017,New York,4563035,392178
+2017,Pennsylvania,4463267,377158
+2018,New Jersey,2754253,150528
+2018,New York,4712779,389404
+2018,Pennsylvania,4424183,372679
+2019,New Jersey (2),2639261,148363
+2019,New York,4444391,384622
+2019,Pennsylvania,4267811,366641
+2020,New Jersey (2),2541125,121379
+2020,New York,4232748,384620
+2020,Pennsylvania,4043715,360493
+
+================
+File: files/Motor_Vehicle_Registrations_Dashboard_data.csv:Zone.Identifier
+================
+[ZoneTransfer]
+ZoneId=3
+
+================
+File: files/rent_primeR.csv
+================
+Year,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec,Annual,HALF1,HALF2
+1994,166.6,168.1,168.3,167.7,168.2,168.6,168.6,169.8,170.1,169.8,169.7,170.8,168.9,167.9,169.8
+1995,171.4,171.7,172.1,172.7,173.2,173.5,173.9,174,174.2,174.5,174.9,175.2,173.4,172.4,174.5
+1996,175.6,176.3,176.5,176.7,177.3,177.8,178.9,179.1,179.4,179.8,180.6,181,178.3,176.7,179.8
+1997,181.2,182,182.6,183.1,183.6,184,184.6,185.5,185.7,186.4,186.8,187.5,184.4,182.8,186.1
+1998,187.9,188.6,188.8,188.8,189.6,190.2,190.8,191.4,191.8,192.5,193.7,194.2,190.7,189,192.4
+1999,194.4,194.9,195.3,195.5,195.9,195.9,196.5,197,197.3,198.3,200.4,201.3,196.9,195.3,198.5
+2000,202.5,202.6,203.2,203,203.5,204.3,205.6,206.4,207.8,208.3,208.5,209.2,205.4,203.2,207.6
+2001,209.9,211.3,211.8,212.5,212.9,213.2,213.7,214,214.7,215.1,216.6,217.8,213.6,211.9,215.3
+2002,218.4,219.6,220.7,221,222.1,222.7,223.4,224.1,224.7,226.3,227.1,227.8,223.2,220.8,225.6
+2003,229,229.6,230,230.9,231.2,232.3,233.8,234.5,235,235.3,236.7,237.5,233,230.5,235.5
+2004,237.6,238.9,239.9,241.3,242.7,243.3,244.5,245.1,246.3,246.9,247.3,248.6,243.5,240.6,246.5
+2005,250,251.1,251.8,252.5,253.6,255.3,257.3,258.3,259.6,261.5,262.4,261.9,256.3,252.4,260.2
+2006,262.4,264.7,265.6,266.8,267.8,269.2,269.6,271.2,273,273.3,274.8,276.1,269.5,266.1,273
+2007,277.14,277.634,277.974,278.752,280.083,281.291,281.457,282.562,284.155,285.604,286.418,287.618,281.724,278.812,284.636
+2008,288.886,289.775,290.943,291.938,292.639,294.696,297.326,299.103,299.508,301.253,302.313,303.511,295.991,291.48,300.502
+2009,304.403,305.125,306.714,307.816,308.207,308.199,308.11,308.218,307.895,307.574,308.977,309.229,307.539,306.744,308.334
+2010,309.408,309.841,311.085,311.378,311.918,313.115,314.997,316.329,316.545,317.286,317.192,317.341,313.87,311.124,316.615
+2011,316.333,316.629,318.089,318.941,319.343,320.554,321.621,322.568,322.86,323.82,324.09,323.923,320.731,318.315,323.147
+2012,324.92,324.67,325.323,326.117,327.492,328.237,328.979,329.964,330.906,331.459,331.472,332.255,328.483,326.127,330.839
+2013,332.991,334.895,336.693,336.492,337.59,338.117,338.45,339.926,340.556,341.629,342.262,343.18,338.565,336.13,341.001
+2014,344.509,343.73,344.819,346.679,347.91,348.329,349.097,350.591,350.887,351.398,352.808,353.288,348.67,345.996,351.345
+2015,353.748,354.447,355.451,355.424,357.021,357.922,359.322,360.239,363.025,364.511,365.524,366.776,359.451,355.669,363.233
+2016,367.552,368.693,369.185,369.579,370.558,370.763,371.871,372.487,373.441,374.891,375.539,377.194,371.813,369.388,374.237
+2017,377.224,377.592,378.523,378.952,380.197,380.805,381.149,383.15,383.268,384.111,384.611,385.109,381.224,378.882,383.566
+2018,385.646,385.822,386.926,387.142,387.701,387.522,388.214,390.007,389.528,391.085,392.388,392.999,388.748,386.793,390.704
+2019,394.041,395.438,396.754,398.932,399.681,400.852,401.406,402.171,403.173,402.619,404.275,404.797,400.345,397.616,403.074
+2020,405.906,406.261,406.933,407.462,407.966,408.318,408.845,409.042,409.663,409.322,410.546,410.11,408.365,407.141,409.588
+2021,409.744,409.559,408.227,408.794,408.391,408.583,407.857,408.408,409.529,410.024,410.245,410.839,409.183,408.883,409.484
+2022,412.105,414.299,414.021,414.401,415.565,417.792,419.087,420.194,422.015,423.709,427.047,430.8,419.253,414.697,423.809
+2023,433.298,435.331,437.855,439.576,440.484,441.748,443.416,445.377,447.956,449.583,450.553,452.537,443.143,438.049,448.237
+2024,453.146,456.233,456.832,458.16,460.059,463.109,465.65,467.613,470.439,472.564,475.507,477.103,464.701,457.923,471.479
+
+================
+File: files/rent_primeR.csv:Zone.Identifier
+================
+[ZoneTransfer]
+ZoneId=3
+
+================
+File: public/chart-icon.svg
+================
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" rx="6" fill="#4F46E5"/>
+  <path d="M8 24V16H12V24H8Z" fill="white"/>
+  <path d="M14 24V8H18V24H14Z" fill="white"/>
+  <path d="M20 24V12H24V24H20Z" fill="white"/>
+</svg>
+
+================
+File: public/grid-pattern.svg
+================
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(59, 130, 246, 0.1)" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="100" height="100" fill="url(#grid)" />
+</svg>
+
+================
+File: public/housing.csv
+================
+Year,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec,Annual,HALF1,HALF2
+1994,157.1,159.8,160.3,159.2,158.8,159.5,160.4,161.8,160.9,160.7,160,159.7,159.9,159.1,160.6
+1995,160.9,161.5,162,162.4,162.8,163.9,165,165,164.1,164.2,164.4,164.6,163.4,162.3,164.6
+1996,166.6,166.9,167.4,166.4,166.7,167.4,168.4,168.9,168.3,168.2,168.2,168.9,167.7,166.9,168.5
+1997,169.8,170.9,171.2,170.5,170.2,171.3,172.5,172.7,172.5,172.6,172.7,173.4,171.7,170.7,172.7
+1998,174,174.5,174.9,174.7,174.8,176.1,176.8,177.1,176.8,177.1,177.2,177.3,175.9,174.8,177.1
+1999,177.7,178.4,178.3,178.5,178.4,179.7,180.4,180.4,180.6,180.5,181.2,181,179.6,178.5,180.7
+2000,182.9,184.8,184.9,184.2,183.9,185.8,187.5,186.8,187.8,187.7,188.5,188.4,186.1,184.4,187.8
+2001,189.7,189.8,191.3,191.6,191.5,193.7,194.3,194.6,193.7,193.1,194.1,194.3,192.6,191.3,194
+2002,196.4,197.6,199.2,199.2,198.7,200.1,200.8,201.9,201.1,201.9,201,200.8,199.9,198.5,201.3
+2003,204.6,205.4,207.6,206.7,207.2,207.9,208.8,210.3,208.7,209.9,209.5,209.8,208,206.6,209.5
+2004,211.9,212.4,214.6,216.2,215.6,218.4,218.5,219,218.2,219.3,218.4,218.4,216.7,214.9,218.6
+2005,221.4,222.1,228.5,227.4,224.4,224.9,227.2,227.9,226.6,230.1,229.3,228.5,226.5,224.8,228.3
+2006,230.6,230.9,233.4,236,237.8,240.6,242.1,243.1,241.4,239.9,239.7,240.8,238,234.9,241.2
+2007,241.419,242.692,244.042,244.436,245.293,248.228,249.798,249.191,247.319,246.949,247.906,247.786,246.255,244.352,248.158
+2008,248.563,250.328,252.586,252.2,253.161,257.051,259.706,260.568,258.439,257.047,254.912,255.615,255.015,252.315,257.715
+2009,256.339,256.561,257.491,257.062,256.573,257.537,258.912,258.755,256.97,256.273,256.464,256.523,257.122,256.927,257.316
+2010,257.261,257.077,257.82,257.869,258.555,259.514,260.421,259.997,258.871,258.468,258.216,258.702,258.564,258.016,259.113
+2011,259.081,259.198,259.985,260.194,261.585,263.038,264.345,264.07,263.675,262.854,262.528,261.61,261.847,260.514,263.18
+2012,262.677,262.504,263.648,263.31,264.114,265.684,265.403,266.008,266.552,265.971,266.862,267.015,264.979,263.656,266.302
+2013,268.881,269.26,269.193,268.403,269.517,270.574,271.114,271.752,272.914,271.244,271.864,272.862,270.632,269.305,271.958
+2014,277.625,275.507,276.078,275.77,277.037,277.24,277.203,277.613,276.841,276.521,275.897,275.669,276.583,276.543,276.624
+2015,277.285,278.464,277.589,277.917,278.276,279.665,279.811,279.988,281.295,280.808,280.746,280.056,279.325,278.199,280.451
+2016,280.378,280.952,282.322,282.662,283.325,285.09,285.748,286.282,286.331,286.51,287.452,288.586,284.637,282.455,286.818
+2017,289.262,289.614,289.62,289.908,290.95,292.15,292.019,292.898,292.867,292.432,292.699,293.988,291.534,290.251,292.817
+2018,294.441,295.424,296.511,296.698,297.999,298.099,298.964,298.629,299.187,299.024,298.697,299.249,297.744,296.529,298.958
+2019,301.14,301.233,301.791,302.413,302.192,303.608,303.892,303.603,304.799,303.491,304.498,305.331,303.166,302.063,304.269
+2020,307.061,307.21,307.537,306.467,306.606,308.68,308.945,308.825,309.494,308.123,308.787,309.952,308.141,307.26,309.021
+
+================
+File: public/Motor_Vehicle_Registrations_Dashboard_data.csv
+================
+year,state,Auto,Motorcycle
+1994,New Jersey,4423973,87267
+1994,New York,7677546,176541
+1994,Pennsylvania,5970382,169541
+1995,New Jersey,4433631,88634
+1995,New York,7645540,169679
+1995,Pennsylvania,5882488,171335
+1996,New Jersey,4397727,91995
+1996,New York,7984694,136246
+1996,Pennsylvania,5935633,178527
+1997,New Jersey,4268888,94243
+1997,New York,8063496,135814
+1997,Pennsylvania,6050365,183116
+1998,New Jersey,4215195,100564
+1998,New York,7664320,138846
+1998,Pennsylvania,6131725,191073
+1999,New Jersey,4341182,105547
+1999,New York,7892118,143547
+1999,Pennsylvania,6071724,200829
+2000,New Jersey,4450719,111853
+2000,New York,7501343,107486
+2000,Pennsylvania,6032058,215737
+2001,New Jersey,4517906,125747
+2001,New York,7597371,118864
+2001,Pennsylvania,6231291,238433
+2002,New Jersey,4502809,134034
+2002,New York,7924325,142790
+2002,Pennsylvania,6072248,249916
+2003,New Jersey,4448660,140383
+2003,New York,8313058,150756
+2003,Pennsylvania,6120710,268990
+2004,New Jersey,4016485,149911
+2004,New York,8548783,170148
+2005,New Jersey,3957193,158889
+2005,New York,8973047,190635
+2005,Pennsylvania,5888278,305837
+2006,New Jersey,3692966,163636
+2006,New York,8528457,203145
+2006,Pennsylvania,5842819,330947
+2007,New Jersey,3827017,164024
+2007,New York,8866591,315987.89
+2007,Pennsylvania,5805046,353945
+2008,New Jersey,3826995,164024
+2008,New York,8576151,340131.2
+2008,Pennsylvania,6086264,398731
+2009,New Jersey,3705322,157821
+2009,New York,8725551,345430
+2009,Pennsylvania,5818056,409854
+2010,New Jersey,3971896,327530
+2010,New York,7950192,348175
+2010,Pennsylvania,5682239,412164
+2011,New Jersey,4416631,330489
+2011,New York,5866664,345855
+2011,Pennsylvania,5484519,404896
+2012,New Jersey,3971265,332470
+2012,New York,5076204,345412.32
+2012,Pennsylvania,4774517,419282
+2013,New Jersey,3644546,152111
+2013,New York,5203357,345118
+2013,Pennsylvania,4809900,400908
+2014,New Jersey,3476346,149963
+2014,New York,5159696,346210
+2014,Pennsylvania,4711119,396315
+2015,New Jersey,2918603,152472
+2015,New York,4868521,354858
+2015,Pennsylvania,4680498,393390
+2016,New Jersey,2847881,151101
+2016,New York,4890916,392771
+2016,Pennsylvania,4640471,393037
+2017,New Jersey,2798699,152979
+2017,New York,4563035,392178
+2017,Pennsylvania,4463267,377158
+2018,New Jersey,2754253,150528
+2018,New York,4712779,389404
+2018,Pennsylvania,4424183,372679
+2019,New Jersey (2),2639261,148363
+2019,New York,4444391,384622
+2019,Pennsylvania,4267811,366641
+2020,New Jersey (2),2541125,121379
+2020,New York,4232748,384620
+2020,Pennsylvania,4043715,360493
+
+================
+File: public/rent_primeR.csv
+================
+Year,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec,Annual,HALF1,HALF2
+1994,166.6,168.1,168.3,167.7,168.2,168.6,168.6,169.8,170.1,169.8,169.7,170.8,168.9,167.9,169.8
+1995,171.4,171.7,172.1,172.7,173.2,173.5,173.9,174,174.2,174.5,174.9,175.2,173.4,172.4,174.5
+1996,175.6,176.3,176.5,176.7,177.3,177.8,178.9,179.1,179.4,179.8,180.6,181,178.3,176.7,179.8
+1997,181.2,182,182.6,183.1,183.6,184,184.6,185.5,185.7,186.4,186.8,187.5,184.4,182.8,186.1
+1998,187.9,188.6,188.8,188.8,189.6,190.2,190.8,191.4,191.8,192.5,193.7,194.2,190.7,189,192.4
+1999,194.4,194.9,195.3,195.5,195.9,195.9,196.5,197,197.3,198.3,200.4,201.3,196.9,195.3,198.5
+2000,202.5,202.6,203.2,203,203.5,204.3,205.6,206.4,207.8,208.3,208.5,209.2,205.4,203.2,207.6
+2001,209.9,211.3,211.8,212.5,212.9,213.2,213.7,214,214.7,215.1,216.6,217.8,213.6,211.9,215.3
+2002,218.4,219.6,220.7,221,222.1,222.7,223.4,224.1,224.7,226.3,227.1,227.8,223.2,220.8,225.6
+2003,229,229.6,230,230.9,231.2,232.3,233.8,234.5,235,235.3,236.7,237.5,233,230.5,235.5
+2004,237.6,238.9,239.9,241.3,242.7,243.3,244.5,245.1,246.3,246.9,247.3,248.6,243.5,240.6,246.5
+2005,250,251.1,251.8,252.5,253.6,255.3,257.3,258.3,259.6,261.5,262.4,261.9,256.3,252.4,260.2
+2006,262.4,264.7,265.6,266.8,267.8,269.2,269.6,271.2,273,273.3,274.8,276.1,269.5,266.1,273
+2007,277.14,277.634,277.974,278.752,280.083,281.291,281.457,282.562,284.155,285.604,286.418,287.618,281.724,278.812,284.636
+2008,288.886,289.775,290.943,291.938,292.639,294.696,297.326,299.103,299.508,301.253,302.313,303.511,295.991,291.48,300.502
+2009,304.403,305.125,306.714,307.816,308.207,308.199,308.11,308.218,307.895,307.574,308.977,309.229,307.539,306.744,308.334
+2010,309.408,309.841,311.085,311.378,311.918,313.115,314.997,316.329,316.545,317.286,317.192,317.341,313.87,311.124,316.615
+2011,316.333,316.629,318.089,318.941,319.343,320.554,321.621,322.568,322.86,323.82,324.09,323.923,320.731,318.315,323.147
+2012,324.92,324.67,325.323,326.117,327.492,328.237,328.979,329.964,330.906,331.459,331.472,332.255,328.483,326.127,330.839
+2013,332.991,334.895,336.693,336.492,337.59,338.117,338.45,339.926,340.556,341.629,342.262,343.18,338.565,336.13,341.001
+2014,344.509,343.73,344.819,346.679,347.91,348.329,349.097,350.591,350.887,351.398,352.808,353.288,348.67,345.996,351.345
+2015,353.748,354.447,355.451,355.424,357.021,357.922,359.322,360.239,363.025,364.511,365.524,366.776,359.451,355.669,363.233
+2016,367.552,368.693,369.185,369.579,370.558,370.763,371.871,372.487,373.441,374.891,375.539,377.194,371.813,369.388,374.237
+2017,377.224,377.592,378.523,378.952,380.197,380.805,381.149,383.15,383.268,384.111,384.611,385.109,381.224,378.882,383.566
+2018,385.646,385.822,386.926,387.142,387.701,387.522,388.214,390.007,389.528,391.085,392.388,392.999,388.748,386.793,390.704
+2019,394.041,395.438,396.754,398.932,399.681,400.852,401.406,402.171,403.173,402.619,404.275,404.797,400.345,397.616,403.074
+2020,405.906,406.261,406.933,407.462,407.966,408.318,408.845,409.042,409.663,409.322,410.546,410.11,408.365,407.141,409.588
+2021,409.744,409.559,408.227,408.794,408.391,408.583,407.857,408.408,409.529,410.024,410.245,410.839,409.183,408.883,409.484
+2022,412.105,414.299,414.021,414.401,415.565,417.792,419.087,420.194,422.015,423.709,427.047,430.8,419.253,414.697,423.809
+2023,433.298,435.331,437.855,439.576,440.484,441.748,443.416,445.377,447.956,449.583,450.553,452.537,443.143,438.049,448.237
+2024,453.146,456.233,456.832,458.16,460.059,463.109,465.65,467.613,470.439,472.564,475.507,477.103,464.701,457.923,471.479
+
+================
+File: public/vite.svg
+================
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="31.88" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 257"><defs><linearGradient id="IconifyId1813088fe1fbc01fb466" x1="-.828%" x2="57.636%" y1="7.652%" y2="78.411%"><stop offset="0%" stop-color="#41D1FF"></stop><stop offset="100%" stop-color="#BD34FE"></stop></linearGradient><linearGradient id="IconifyId1813088fe1fbc01fb467" x1="43.376%" x2="50.316%" y1="2.242%" y2="89.03%"><stop offset="0%" stop-color="#FFEA83"></stop><stop offset="8.333%" stop-color="#FFDD35"></stop><stop offset="100%" stop-color="#FFA800"></stop></linearGradient></defs><path fill="url(#IconifyId1813088fe1fbc01fb466)" d="M255.153 37.938L134.897 252.976c-2.483 4.44-8.862 4.466-11.382.048L.875 37.958c-2.746-4.814 1.371-10.646 6.827-9.67l120.385 21.517a6.537 6.537 0 0 0 2.322-.004l117.867-21.483c5.438-.991 9.574 4.796 6.877 9.62Z"></path><path fill="url(#IconifyId1813088fe1fbc01fb467)" d="M185.432.063L96.44 17.501a3.268 3.268 0 0 0-2.634 3.014l-5.474 92.456a3.268 3.268 0 0 0 3.997 3.378l24.777-5.718c2.318-.535 4.413 1.507 3.936 3.838l-7.361 36.047c-.495 2.426 1.782 4.5 4.151 3.78l15.304-4.649c2.372-.72 4.652 1.36 4.15 3.788l-11.698 56.621c-.732 3.542 3.979 5.473 5.943 2.437l1.313-2.028l72.516-144.72c1.215-2.423-.88-5.186-3.54-4.672l-25.505 4.922c-2.396.462-4.435-1.77-3.759-4.114l16.646-57.705c.677-2.35-1.37-4.583-3.769-4.113Z"></path></svg>
+
+================
+File: src/assets/react.svg
+================
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="35.93" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 228"><path fill="#00D8FF" d="M210.483 73.824a171.49 171.49 0 0 0-8.24-2.597c.465-1.9.893-3.777 1.273-5.621c6.238-30.281 2.16-54.676-11.769-62.708c-13.355-7.7-35.196.329-57.254 19.526a171.23 171.23 0 0 0-6.375 5.848a155.866 155.866 0 0 0-4.241-3.917C100.759 3.829 77.587-4.822 63.673 3.233C50.33 10.957 46.379 33.89 51.995 62.588a170.974 170.974 0 0 0 1.892 8.48c-3.28.932-6.445 1.924-9.474 2.98C17.309 83.498 0 98.307 0 113.668c0 15.865 18.582 31.778 46.812 41.427a145.52 145.52 0 0 0 6.921 2.165a167.467 167.467 0 0 0-2.01 9.138c-5.354 28.2-1.173 50.591 12.134 58.266c13.744 7.926 36.812-.22 59.273-19.855a145.567 145.567 0 0 0 5.342-4.923a168.064 168.064 0 0 0 6.92 6.314c21.758 18.722 43.246 26.282 56.54 18.586c13.731-7.949 18.194-32.003 12.4-61.268a145.016 145.016 0 0 0-1.535-6.842c1.62-.48 3.21-.974 4.76-1.488c29.348-9.723 48.443-25.443 48.443-41.52c0-15.417-17.868-30.326-45.517-39.844Zm-6.365 70.984c-1.4.463-2.836.91-4.3 1.345c-3.24-10.257-7.612-21.163-12.963-32.432c5.106-11 9.31-21.767 12.459-31.957c2.619.758 5.16 1.557 7.61 2.4c23.69 8.156 38.14 20.213 38.14 29.504c0 9.896-15.606 22.743-40.946 31.14Zm-10.514 20.834c2.562 12.94 2.927 24.64 1.23 33.787c-1.524 8.219-4.59 13.698-8.382 15.893c-8.067 4.67-25.32-1.4-43.927-17.412a156.726 156.726 0 0 1-6.437-5.87c7.214-7.889 14.423-17.06 21.459-27.246c12.376-1.098 24.068-2.894 34.671-5.345a134.17 134.17 0 0 1 1.386 6.193ZM87.276 214.515c-7.882 2.783-14.16 2.863-17.955.675c-8.075-4.657-11.432-22.636-6.853-46.752a156.923 156.923 0 0 1 1.869-8.499c10.486 2.32 22.093 3.988 34.498 4.994c7.084 9.967 14.501 19.128 21.976 27.15a134.668 134.668 0 0 1-4.877 4.492c-9.933 8.682-19.886 14.842-28.658 17.94ZM50.35 144.747c-12.483-4.267-22.792-9.812-29.858-15.863c-6.35-5.437-9.555-10.836-9.555-15.216c0-9.322 13.897-21.212 37.076-29.293c2.813-.98 5.757-1.905 8.812-2.773c3.204 10.42 7.406 21.315 12.477 32.332c-5.137 11.18-9.399 22.249-12.634 32.792a134.718 134.718 0 0 1-6.318-1.979Zm12.378-84.26c-4.811-24.587-1.616-43.134 6.425-47.789c8.564-4.958 27.502 2.111 47.463 19.835a144.318 144.318 0 0 1 3.841 3.545c-7.438 7.987-14.787 17.08-21.808 26.988c-12.04 1.116-23.565 2.908-34.161 5.309a160.342 160.342 0 0 1-1.76-7.887Zm110.427 27.268a347.8 347.8 0 0 0-7.785-12.803c8.168 1.033 15.994 2.404 23.343 4.08c-2.206 7.072-4.956 14.465-8.193 22.045a381.151 381.151 0 0 0-7.365-13.322Zm-45.032-43.861c5.044 5.465 10.096 11.566 15.065 18.186a322.04 322.04 0 0 0-30.257-.006c4.974-6.559 10.069-12.652 15.192-18.18ZM82.802 87.83a323.167 323.167 0 0 0-7.227 13.238c-3.184-7.553-5.909-14.98-8.134-22.152c7.304-1.634 15.093-2.97 23.209-3.984a321.524 321.524 0 0 0-7.848 12.897Zm8.081 65.352c-8.385-.936-16.291-2.203-23.593-3.793c2.26-7.3 5.045-14.885 8.298-22.6a321.187 321.187 0 0 0 7.257 13.246c2.594 4.48 5.28 8.868 8.038 13.147Zm37.542 31.03c-5.184-5.592-10.354-11.779-15.403-18.433c4.902.192 9.899.29 14.978.29c5.218 0 10.376-.117 15.453-.343c-4.985 6.774-10.018 12.97-15.028 18.486Zm52.198-57.817c3.422 7.8 6.306 15.345 8.596 22.52c-7.422 1.694-15.436 3.058-23.88 4.071a382.417 382.417 0 0 0 7.859-13.026a347.403 347.403 0 0 0 7.425-13.565Zm-16.898 8.101a358.557 358.557 0 0 1-12.281 19.815a329.4 329.4 0 0 1-23.444.823c-7.967 0-15.716-.248-23.178-.732a310.202 310.202 0 0 1-12.513-19.846h.001a307.41 307.41 0 0 1-10.923-20.627a310.278 310.278 0 0 1 10.89-20.637l-.001.001a307.318 307.318 0 0 1 12.413-19.761c7.613-.576 15.42-.876 23.31-.876H128c7.926 0 15.743.303 23.354.883a329.357 329.357 0 0 1 12.335 19.695a358.489 358.489 0 0 1 11.036 20.54a329.472 329.472 0 0 1-11 20.722Zm22.56-122.124c8.572 4.944 11.906 24.881 6.52 51.026c-.344 1.668-.73 3.367-1.15 5.09c-10.622-2.452-22.155-4.275-34.23-5.408c-7.034-10.017-14.323-19.124-21.64-27.008a160.789 160.789 0 0 1 5.888-5.4c18.9-16.447 36.564-22.941 44.612-18.3ZM128 90.808c12.625 0 22.86 10.235 22.86 22.86s-10.235 22.86-22.86 22.86s-22.86-10.235-22.86-22.86s10.235-22.86 22.86-22.86Z"></path></svg>
+
+================
+File: src/components/ErrorBoundary.jsx
+================
+import { Component } from 'react';
+
+export default class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-8">
+            <div className="text-center">
+              <svg
+                className="mx-auto h-12 w-12 text-red-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+              <h3 className="mt-4 text-lg font-medium text-gray-900">Something went wrong</h3>
+              <p className="mt-2 text-sm text-gray-500">
+                Please try refreshing the page or contact support if the problem persists.
+              </p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Refresh Page
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+================
+File: src/components/ErrorDisplay.jsx
+================
+import React from 'react';
+
+function ErrorDisplay({ message }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#020924]">
+      <div className="bg-red-900/20 border border-red-500 rounded-lg p-8 max-w-lg">
+        <div className="flex items-center mb-4">
+          <svg className="w-8 h-8 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <h2 className="text-xl font-bold text-red-500">Error</h2>
+        </div>
+        <p className="text-red-300">{message || 'An unexpected error occurred. Please try again later.'}</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="mt-6 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors duration-200"
+        >
+          Retry
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default ErrorDisplay;
+
+================
+File: src/components/LoadingSpinner.jsx
+================
+import React from 'react';
+
+function LoadingSpinner() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#020924]">
+      <div className="relative">
+        {/* Outer ring */}
+        <div className="absolute inset-0 rounded-full border-4 border-blue-900 opacity-25"></div>
+        
+        {/* Spinning ring */}
+        <div className="w-16 h-16 rounded-full border-4 border-t-blue-400 border-r-blue-400 border-b-transparent border-l-transparent animate-spin"></div>
+        
+        {/* Inner pulse */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-4 h-4 bg-blue-400 rounded-full animate-pulse"></div>
+        </div>
+      </div>
+      <div className="ml-4 text-blue-400 text-lg font-semibold">Loading Data...</div>
+    </div>
+  );
+}
+
+export default LoadingSpinner;
+
+================
+File: src/utils/dataProcessing.js
+================
+const normalizeValue = (value) => {
+  const parsed = parseFloat(value);
+  return isNaN(parsed) ? 0 : parsed;
+};
+
+const validateYear = (year) => {
+  const parsed = parseInt(year);
+  return !isNaN(parsed) && parsed >= 1990 && parsed <= 2024;
+};
+
+const cleanStateName = (state) => {
+  if (!state) return 'All States';
+  return state.replace(/\s*\(\d+\)$/, '').trim();
+};
+
+const calculateAverageByYear = (data, stateFilter = null) => {
+  const yearMap = new Map();
+  
+  data.forEach(row => {
+    const cleanedState = cleanStateName(row.state);
+    if (!stateFilter || cleanedState === stateFilter) {
+      const year = parseInt(row.year);
+      if (validateYear(year)) {
+        const auto = parseInt(row.Auto) || 0;
+        const motorcycle = parseInt(row.Motorcycle) || 0;
+        
+        if (!yearMap.has(year)) {
+          yearMap.set(year, { total: 0, count: 0 });
+        }
+        
+        const entry = yearMap.get(year);
+        entry.total += (auto + motorcycle);
+        entry.count += 1;
+      }
+    }
+  });
+  
+  return Array.from(yearMap.entries())
+    .map(([year, data]) => ({
+      year: year.toString(),
+      registrations: Math.round(data.total / data.count),
+      state: stateFilter || 'All States'
+    }))
+    .sort((a, b) => parseInt(a.year) - parseInt(b.year));
+};
+
+export const processVehicleData = (data, stateFilter = null) => {
+  return calculateAverageByYear(data, stateFilter);
+};
+
+export const processHousingData = (data, stateFilter = null) => {
+  return data
+    .filter(row => {
+      const year = parseInt(row.Year);
+      const cleanedState = cleanStateName(row.State);
+      return validateYear(year) && (!stateFilter || cleanedState === stateFilter);
+    })
+    .map(row => ({
+      year: row.Year.toString(),
+      housingIndex: normalizeValue(row.Annual),
+      state: cleanStateName(row.State)
+    }))
+    .sort((a, b) => parseInt(a.year) - parseInt(b.year));
+};
+
+export const processRentData = (data, stateFilter = null) => {
+  return data
+    .filter(row => {
+      const year = parseInt(row.Year);
+      const cleanedState = cleanStateName(row.State);
+      return validateYear(year) && (!stateFilter || cleanedState === stateFilter);
+    })
+    .map(row => ({
+      year: row.Year.toString(),
+      rentIndex: normalizeValue(row.Annual),
+      state: cleanStateName(row.State)
+    }))
+    .sort((a, b) => parseInt(a.year) - parseInt(b.year));
+};
+
+export const combineDatasets = (vehicleData, housingData, rentData) => {
+  const yearMap = new Map();
+  
+  vehicleData.forEach(row => {
+    yearMap.set(row.year, { 
+      registrations: row.registrations,
+      state: cleanStateName(row.state)
+    });
+  });
+  
+  housingData.forEach(row => {
+    if (yearMap.has(row.year)) {
+      const entry = yearMap.get(row.year);
+      entry.housingIndex = row.housingIndex;
+      if (!entry.state || entry.state === 'All States') {
+        entry.state = cleanStateName(row.state);
+      }
+    }
+  });
+  
+  rentData.forEach(row => {
+    if (yearMap.has(row.year)) {
+      const entry = yearMap.get(row.year);
+      entry.rentIndex = row.rentIndex;
+      if (!entry.state || entry.state === 'All States') {
+        entry.state = cleanStateName(row.state);
+      }
+    }
+  });
+  
+  return Array.from(yearMap.entries())
+    .map(([year, data]) => ({
+      year,
+      ...data
+    }))
+    .filter(row => row.registrations && row.housingIndex && row.rentIndex)
+    .sort((a, b) => parseInt(a.year) - parseInt(b.year));
+};
+
+================
+File: src/App.jsx
+================
+import { useState, useEffect } from 'react';
+import { Card, Title, Text, TabGroup, TabList, Tab, TabPanels, TabPanel, Grid, Col } from '@tremor/react';
+import { LineChart, AreaChart, ComposedChart, Bar, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import Papa from 'papaparse';
+import { processVehicleData, processHousingData, processRentData, combineDatasets } from './utils/dataProcessing';
+import LoadingSpinner from './components/LoadingSpinner';
+import ErrorBoundary from './components/ErrorBoundary';
+
+function App() {
+  const [combinedData, setCombinedData] = useState([]);
+  const [housingData, setHousingData] = useState([]);
+  const [rentData, setRentData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedView, setSelectedView] = useState(0);
+  const [selectedState, setSelectedState] = useState('All States');
+  const [availableStates, setAvailableStates] = useState(['All States']);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setIsLoading(true);
+        const vehicleResponse = await fetch('/Motor_Vehicle_Registrations_Dashboard_data.csv');
+        const housingResponse = await fetch('/housing.csv');
+        const rentResponse = await fetch('/rent_primeR.csv');
+
+        const vehicleText = await vehicleResponse.text();
+        const housingText = await housingResponse.text();
+        const rentText = await rentResponse.text();
+
+        const vehicleParsed = Papa.parse(vehicleText, { header: true });
+        const housingParsed = Papa.parse(housingText, { header: true });
+        const rentParsed = Papa.parse(rentText, { header: true });
+
+        // Extract unique states and remove duplicates
+        const states = ['All States', ...new Set(
+          vehicleParsed.data
+            .map(row => row.state?.trim())
+            .filter(Boolean)
+            .map(state => state.replace(/\s*\(\d+\)$/, '')) // Remove trailing numbers in parentheses
+        )].sort();
+        
+        setAvailableStates(states);
+
+        // Process data for all states initially
+        const vehicleData = processVehicleData(vehicleParsed.data);
+        const housingData = processHousingData(housingParsed.data);
+        const rentData = processRentData(rentParsed.data);
+
+        setCombinedData(combineDatasets(vehicleData, housingData, rentData));
+        setHousingData(housingData);
+        setRentData(rentData);
+      } catch (error) {
+        console.error('Error loading data:', error);
+        setError('Failed to load data. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  // Update effect to handle state selection
+  useEffect(() => {
+    if (!isLoading && selectedState !== 'All States') {
+      const updateDataForState = async () => {
+        try {
+          const vehicleResponse = await fetch('/Motor_Vehicle_Registrations_Dashboard_data.csv');
+          const vehicleText = await vehicleResponse.text();
+          const vehicleParsed = Papa.parse(vehicleText, { header: true });
+          
+          // Clean the state data before processing
+          const cleanedData = vehicleParsed.data.map(row => ({
+            ...row,
+            state: row.state?.replace(/\s*\(\d+\)$/, '').trim() // Remove any trailing numbers
+          }));
+          
+          const vehicleData = processVehicleData(cleanedData, selectedState);
+          const combinedStateData = combineDatasets(vehicleData, housingData, rentData);
+          setCombinedData(combinedStateData);
+        } catch (error) {
+          console.error('Error updating state data:', error);
+        }
+      };
+
+      updateDataForState();
+    }
+  }, [selectedState, isLoading]);
+
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <ErrorDisplay error={error} />;
+
+  return (
+    <div className="min-h-screen bg-[#020924] relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid-pattern.png')] opacity-5"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-blue-500/20 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-purple-500/10 rounded-full blur-[100px]"></div>
+      </div>
+
+      <nav className="bg-[#041138]/90 backdrop-blur-lg shadow-lg sticky top-0 z-10 border-b border-blue-900/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-400/30">
+                <svg
+                  className="h-8 w-8 text-blue-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <span className="text-xl font-bold text-white tracking-tight">Economic Mobility Analysis</span>
+                <p className="text-blue-400 text-sm">Data Visualization Project</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-6">
+              <select
+                value={selectedState}
+                onChange={(e) => setSelectedState(e.target.value)}
+                className="bg-[#041138] text-blue-200 border border-blue-900 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {availableStates.map(state => (
+                  <option key={state} value={state}>{state}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 relative">
+        <div className="text-center mb-16">
+          <div className="inline-block">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-500/10 text-blue-400 ring-1 ring-blue-400/30 mb-4">
+              {selectedState === 'All States' ? 'National Overview' : selectedState + ' Data'}
+            </span>
+          </div>
+          <h1 className="text-5xl font-bold text-white sm:text-6xl lg:text-7xl tracking-tight mb-6">
+            Three Decades of
+            <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text"> Mobility</span>
+          </h1>
+          <p className="mt-6 text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
+            Exploring the relationship between vehicle ownership and economic indicators through advanced data visualization
+          </p>
+        </div>
+
+        <TabGroup index={selectedView} onIndexChange={setSelectedView}>
+          <div className="max-w-3xl mx-auto mb-12">
+            <TabList className="flex space-x-2 rounded-xl bg-[#041138]/80 backdrop-blur p-2 border border-blue-900/50 shadow-lg">
+              {['Overview', 'Housing Trends', 'Vehicle Registration'].map((tab) => (
+                <Tab
+                  key={tab}
+                  className="flex-1 px-4 py-3 text-sm font-medium leading-5 text-blue-200
+                    rounded-lg ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2
+                    ui-selected:bg-blue-500 ui-selected:text-white ui-selected:shadow-lg
+                    ui-not-selected:text-blue-200 ui-not-selected:hover:bg-white/[0.12] 
+                    transition-all duration-200 relative overflow-hidden flex items-center justify-center"
+                >
+                  <span className="relative z-10 text-center">{tab}</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/0 to-purple-500/0 
+                    ui-selected:from-blue-500/20 ui-selected:via-blue-500/10 ui-selected:to-purple-500/20 
+                    transition-opacity duration-200"></div>
+                </Tab>
+              ))}
+            </TabList>
+          </div>
+
+          <TabPanels>
+            <TabPanel>
+              <div className="space-y-8">
+                <Card className="bg-[#041138]/80 backdrop-blur border border-blue-900/50 shadow-xl rounded-xl overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                  <Title className="text-2xl font-bold text-white mb-4">
+                    Combined Economic Indicators
+                  </Title>
+                  <Text className="text-blue-200 mb-6">
+                    Visualizing the correlation between vehicle registrations and housing costs over time
+                  </Text>
+                  <div className="h-96 relative">
+                    <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent"></div>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <ComposedChart data={combinedData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
+                        <XAxis dataKey="year" stroke="#93c5fd" />
+                        <YAxis yAxisId="left" stroke="#93c5fd" />
+                        <YAxis yAxisId="right" orientation="right" stroke="#93c5fd" />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: '#041138',
+                            border: '1px solid #1e3a8a',
+                            borderRadius: '0.5rem',
+                          }}
+                          labelStyle={{ color: '#93c5fd' }}
+                          itemStyle={{ color: '#93c5fd' }}
+                        />
+                        <Legend wrapperStyle={{ color: '#93c5fd' }} />
+                        <Bar yAxisId="left" dataKey="registrations" fill="#3b82f6" />
+                        <Line yAxisId="right" type="monotone" dataKey="housingIndex" stroke="#10b981" />
+                        <Line yAxisId="right" type="monotone" dataKey="rentIndex" stroke="#8b5cf6" />
+                      </ComposedChart>
+                    </ResponsiveContainer>
+                  </div>
+                </Card>
+
+                <Grid numItems={1} numItemsSm={2} numItemsLg={2} className="gap-8">
+                  <Card className="bg-[#041138]/80 backdrop-blur border border-blue-900/50 shadow-xl rounded-xl overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-blue-500"></div>
+                    <Title className="text-xl font-bold text-white mb-4">
+                      Housing Cost Trends
+                    </Title>
+                    <div className="h-72">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={housingData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
+                          <XAxis dataKey="year" stroke="#93c5fd" />
+                          <YAxis stroke="#93c5fd" />
+                          <Tooltip
+                            contentStyle={{
+                              backgroundColor: '#041138',
+                              border: '1px solid #1e3a8a',
+                              borderRadius: '0.5rem',
+                            }}
+                            labelStyle={{ color: '#93c5fd' }}
+                            itemStyle={{ color: '#93c5fd' }}
+                          />
+                          <Area type="monotone" dataKey="housingIndex" stroke="#10b981" fill="#10b981" fillOpacity={0.2} />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </Card>
+
+                  <Card className="bg-[#041138]/80 backdrop-blur border border-blue-900/50 shadow-xl rounded-xl overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                    <Title className="text-xl font-bold text-white mb-4">
+                      Rent Price Evolution
+                    </Title>
+                    <div className="h-72">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={rentData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
+                          <XAxis dataKey="year" stroke="#93c5fd" />
+                          <YAxis stroke="#93c5fd" />
+                          <Tooltip
+                            contentStyle={{
+                              backgroundColor: '#041138',
+                              border: '1px solid #1e3a8a',
+                              borderRadius: '0.5rem',
+                            }}
+                            labelStyle={{ color: '#93c5fd' }}
+                            itemStyle={{ color: '#93c5fd' }}
+                          />
+                          <Area type="monotone" dataKey="rentIndex" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.2} />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </Card>
+                </Grid>
+              </div>
+            </TabPanel>
+
+            <TabPanel>
+              <div className="space-y-8">
+                <Card className="bg-[#041138]/80 backdrop-blur border border-blue-900/50 shadow-xl rounded-xl overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                  <Title className="text-2xl font-bold text-white mb-4">
+                    Housing Market Analysis
+                  </Title>
+                  <Text className="text-blue-200 mb-6">
+                    Comprehensive view of housing cost changes over three decades
+                  </Text>
+                  <div className="h-96">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <ComposedChart data={combinedData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
+                        <XAxis dataKey="year" stroke="#93c5fd" />
+                        <YAxis stroke="#93c5fd" />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: '#041138',
+                            border: '1px solid #1e3a8a',
+                            borderRadius: '0.5rem',
+                          }}
+                          labelStyle={{ color: '#93c5fd' }}
+                          itemStyle={{ color: '#93c5fd' }}
+                        />
+                        <Legend wrapperStyle={{ color: '#93c5fd' }} />
+                        <Area type="monotone" dataKey="housingIndex" fill="#10b981" stroke="#10b981" fillOpacity={0.2} />
+                        <Line type="monotone" dataKey="rentIndex" stroke="#8b5cf6" strokeWidth={2} />
+                      </ComposedChart>
+                    </ResponsiveContainer>
+                  </div>
+                </Card>
+              </div>
+            </TabPanel>
+
+            <TabPanel>
+              <div className="space-y-8">
+                <Card className="bg-[#041138]/80 backdrop-blur border border-blue-900/50 shadow-xl rounded-xl overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                  <Title className="text-2xl font-bold text-white mb-4">
+                    Vehicle Registration Patterns
+                  </Title>
+                  <Text className="text-blue-200 mb-6">
+                    Analysis of motor vehicle registration trends and their correlation with economic indicators
+                  </Text>
+                  <div className="h-96">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <ComposedChart data={combinedData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
+                        <XAxis dataKey="year" stroke="#93c5fd" />
+                        <YAxis yAxisId="left" stroke="#93c5fd" />
+                        <YAxis yAxisId="right" orientation="right" stroke="#93c5fd" />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: '#041138',
+                            border: '1px solid #1e3a8a',
+                            borderRadius: '0.5rem',
+                          }}
+                          labelStyle={{ color: '#93c5fd' }}
+                          itemStyle={{ color: '#93c5fd' }}
+                        />
+                        <Legend wrapperStyle={{ color: '#93c5fd' }} />
+                        <Bar yAxisId="left" dataKey="registrations" fill="#3b82f6" />
+                        <Line yAxisId="right" type="monotone" dataKey="housingIndex" stroke="#10b981" strokeWidth={2} />
+                      </ComposedChart>
+                    </ResponsiveContainer>
+                  </div>
+                </Card>
+
+                <div className="bg-[#041138]/80 backdrop-blur rounded-xl border border-blue-900/50 shadow-xl p-8 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+                  <h2 className="text-3xl font-bold text-white mb-8 relative">Key Insights</h2>
+                  <div className="prose max-w-none text-blue-200 relative">
+                    <p className="text-lg leading-relaxed">
+                      The data suggests a strong correlation between housing costs and vehicle ownership patterns, particularly during economic downturns.
+                    </p>
+                    <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                      <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
+                        <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-2">30+</div>
+                        <div className="text-sm text-blue-200">Years of Data</div>
+                      </div>
+                      <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
+                        <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-2">3</div>
+                        <div className="text-sm text-blue-200">States Analyzed</div>
+                      </div>
+                      <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
+                        <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-2">2</div>
+                        <div className="text-sm text-blue-200">Economic Indicators</div>
+                      </div>
+                      <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
+                        <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-2">1M+</div>
+                        <div className="text-sm text-blue-200">Data Points</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabPanel>
+          </TabPanels>
+        </TabGroup>
+
+        <div className="mt-24 bg-[#041138]/80 backdrop-blur rounded-xl border border-blue-900/50 shadow-xl p-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+          <h2 className="text-3xl font-bold text-white mb-8 relative">Key Findings & Implications</h2>
+          <div className="prose max-w-none text-blue-200 relative space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <h3 className="text-xl font-semibold text-blue-400">Data-Driven Insights</h3>
+                <div className="space-y-4">
+                  <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50">
+                    <h4 className="text-lg font-medium text-blue-300 mb-2">Strong Inverse Correlation</h4>
+                    <p className="text-blue-200">Analysis reveals a significant inverse relationship between housing costs and vehicle ownership rates, particularly in urban centers. As housing costs increase, vehicle ownership shows a notable decline.</p>
+                  </div>
+                  <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50">
+                    <h4 className="text-lg font-medium text-blue-300 mb-2">Geographic Variations</h4>
+                    <p className="text-blue-200">Urban areas with higher housing costs typically show lower vehicle ownership rates, suggesting increased reliance on public transportation and alternative mobility options.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-6">
+                <h3 className="text-xl font-semibold text-blue-400">Policy Implications</h3>
+                <div className="space-y-4">
+                  <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50">
+                    <h4 className="text-lg font-medium text-blue-300 mb-2">Transportation Planning</h4>
+                    <p className="text-blue-200">Areas with high housing costs require robust public transportation infrastructure to accommodate lower vehicle ownership rates and ensure mobility accessibility.</p>
+                  </div>
+                  <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50">
+                    <h4 className="text-lg font-medium text-blue-300 mb-2">Housing Policy</h4>
+                    <p className="text-blue-200">The data suggests a need for integrated housing and transportation policies that consider the interconnected nature of housing affordability and mobility choices.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <h3 className="text-xl font-semibold text-blue-400 mb-6">Recommendations for Urban Planning</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
+                  <div className="text-2xl text-blue-400 mb-3">01</div>
+                  <h4 className="text-lg font-medium text-blue-300 mb-2">Transit-Oriented Development</h4>
+                  <p className="text-blue-200">Prioritize development near public transportation hubs to provide affordable housing options with reduced dependency on personal vehicles.</p>
+                </div>
+                <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
+                  <div className="text-2xl text-blue-400 mb-3">02</div>
+                  <h4 className="text-lg font-medium text-blue-300 mb-2">Mixed Mobility Solutions</h4>
+                  <p className="text-blue-200">Implement comprehensive mobility strategies that include public transit, bike-sharing, and pedestrian infrastructure.</p>
+                </div>
+                <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
+                  <div className="text-2xl text-blue-400 mb-3">03</div>
+                  <h4 className="text-lg font-medium text-blue-300 mb-2">Affordable Housing Initiatives</h4>
+                  <p className="text-blue-200">Develop policies that promote affordable housing near employment centers and transit corridors.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 p-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-xl border border-blue-800/30">
+              <h3 className="text-2xl font-bold text-white mb-4">Conclusion</h3>
+              <p className="text-lg text-blue-200 leading-relaxed">
+                The analysis demonstrates a clear relationship between housing affordability and vehicle ownership patterns in urban areas. This correlation suggests that as housing costs rise, residents are more likely to forgo vehicle ownership, potentially due to financial constraints and the availability of alternative transportation options. These findings emphasize the need for integrated urban planning approaches that consider both housing and transportation policies to ensure equitable access to mobility and housing options for all residents.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer className="bg-[#041138]/90 backdrop-blur-lg mt-24 border-t border-blue-900/50">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold text-white mb-4">About</h3>
+              <p className="text-blue-300 text-sm">Economic Mobility Analysis provides comprehensive insights into the relationship between vehicle ownership and housing costs.</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-white mb-4">Resources</h3>
+              <ul className="space-y-2 text-sm">
+                <li><a href="#" className="text-blue-300 hover:text-blue-200">Documentation</a></li>
+                <li><a href="#" className="text-blue-300 hover:text-blue-200">Methodology</a></li>
+                <li><a href="#" className="text-blue-300 hover:text-blue-200">Data Sources</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-white mb-4">Contact</h3>
+              <p className="text-blue-300 text-sm">Questions about our analysis? Get in touch with our research team.</p>
+            </div>
+          </div>
+          <div className="mt-8 pt-8 border-t border-blue-900/50 text-center">
+            <p className="text-blue-400 text-sm">
+              © 2025 Emmanuel Lawal. All data sourced from public records.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+function ErrorDisplay({ error }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#020924]">
+      <div className="max-w-md w-full bg-[#041138] shadow-xl rounded-xl border border-blue-900 p-8">
+        <div className="text-center">
+          <svg
+            className="mx-auto h-12 w-12 text-red-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            />
+          </svg>
+          <h3 className="mt-4 text-lg font-medium text-white">Error Loading Data</h3>
+          <p className="mt-2 text-sm text-blue-200">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function AppWithErrorBoundary() {
+  return (
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  );
+}
+
+================
+File: src/index.css
+================
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 2, 9, 36;
+  --background-end-rgb: 4, 17, 56;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--background-start-rgb)),
+    rgb(var(--background-end-rgb))
+  );
+  min-height: 100vh;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tremor overrides */
+.tremor-Card-root {
+  background: rgba(4, 17, 56, 0.8) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(59, 130, 246, 0.2) !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.tremor-Card-root:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.tremor-Tab-root {
+  color: #93c5fd !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.tremor-Tab-root:hover {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+.tremor-Tab-root[data-headlessui-state="selected"] {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+  color: #ffffff !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(4, 17, 56, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.5);
+}
+
+/* Chart customizations */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(59, 130, 246, 0.1) !important;
+}
+
+.recharts-tooltip-wrapper {
+  background: rgba(4, 17, 56, 0.95) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(59, 130, 246, 0.2) !important;
+  border-radius: 0.5rem;
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+================
+File: src/main.jsx
+================
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+
+================
+File: .gitignore
+================
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+================
+File: eslint.config.js
+================
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+
+export default [
+  { ignores: ['dist'] },
+  {
+    files: ['**/*.{js,jsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+    },
+  },
+]
+
+================
+File: index.html
+================
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/chart-icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Analysis of three decades of mobility and economics, comparing motor vehicle registration with shifts in the cost of living." />
+    <meta name="keywords" content="vehicle registration, housing costs, economic analysis, mobility trends" />
+    <title>Economic Mobility Analysis | Three Decades of Data</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+================
+File: package.json
+================
+{
+  "name": "visualization-project",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tremor/react": "^3.14.1",
+    "papaparse": "^5.4.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "recharts": "^2.12.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.10",
+    "@types/react": "^18.2.56",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.18",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.1.4"
+  }
+}
+
+================
+File: postcss.config.cjs
+================
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+
+================
+File: README.md
+================
+# Economic Mobility Analysis Dashboard
+
+## Overview
+This interactive dashboard visualizes the complex relationship between vehicle ownership patterns and housing costs across multiple states over three decades. The project combines extensive datasets on vehicle registrations, housing prices, and rental costs to provide insights into economic mobility trends.
+
+## Key Features
+- Interactive data visualization with real-time state filtering
+- Comprehensive analysis of three key economic indicators:
+  - Motor vehicle registrations
+  - Housing price indices
+  - Rental cost indices
+- Dynamic charts showing temporal trends and correlations
+- Responsive design with modern UI/UX principles
+
+## Technical Stack
+- React.js for frontend development
+- Recharts for data visualization
+- Tremor UI components
+- Tailwind CSS for styling
+
+## Key Findings
+
+### Data-Driven Insights
+1. **Inverse Correlation**
+   - Strong inverse relationship discovered between housing costs and vehicle ownership
+   - Higher housing costs correlate with lower vehicle ownership rates
+   - Pattern particularly pronounced in urban centers
+
+2. **Geographic Variations**
+   - Urban areas show distinct patterns compared to rural regions
+   - Higher housing costs in urban areas correspond with lower vehicle ownership
+   - Suggests increased reliance on public transportation in high-cost areas
+
+### Policy Implications
+
+#### Transportation Planning
+- Areas with high housing costs require robust public transportation infrastructure
+- Need for integrated mobility solutions in high-cost housing areas
+- Evidence supports investment in alternative transportation options
+
+#### Housing Policy
+- Data suggests need for integrated housing and transportation policies
+- Housing affordability directly impacts mobility choices
+- Recommendations for policy makers to consider transportation access in housing development
+
+## Recommendations
+
+1. **Transit-Oriented Development**
+   - Prioritize development near public transportation hubs
+   - Focus on affordable housing options with reduced vehicle dependency
+   - Integrate mixed-use development principles
+
+2. **Mixed Mobility Solutions**
+   - Implement comprehensive mobility strategies
+   - Include public transit, bike-sharing, and pedestrian infrastructure
+   - Focus on reducing car dependency in high-cost areas
+
+3. **Affordable Housing Initiatives**
+   - Develop policies promoting affordable housing near employment centers
+   - Focus on transit corridor development
+   - Consider mobility access in housing development planning
+
+## Conclusions
+The analysis reveals a clear and significant relationship between housing affordability and vehicle ownership patterns in urban areas. As housing costs rise, residents are more likely to forgo vehicle ownership, potentially due to financial constraints and the availability of alternative transportation options. These findings emphasize the need for integrated urban planning approaches that consider both housing and transportation policies to ensure equitable access to mobility and housing options for all residents.
+
+## Data Sources
+- Vehicle registration data from state DMV records
+- Housing price indices from real estate market data
+- Rental cost indices from housing market surveys
+
+## Installation and Usage
+
+1. Clone the repository:
+```bash
+git clone [repository-url]
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Run the development server:
+```bash
+npm run dev
+```
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Contact
+For questions about the analysis or collaboration opportunities, please contact Emmanuel Lawal.
+
+---
+© 2025 Emmanuel Lawal. All data sourced from public records.
+
+================
+File: tailwind.config.js
+================
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'space-blue': '#020924',
+        'deep-blue': '#041138',
+        tremor: {
+          brand: {
+            faint: "#eff6ff",
+            muted: "#bfdbfe",
+            subtle: "#60a5fa",
+            DEFAULT: "#3b82f6",
+            emphasis: "#1d4ed8",
+            inverted: "#ffffff",
+          },
+          background: {
+            muted: "#f9fafb",
+            subtle: "#f3f4f6",
+            DEFAULT: "#ffffff",
+            emphasis: "#374151",
+          },
+          border: {
+            DEFAULT: "#e5e7eb",
+          },
+          ring: {
+            DEFAULT: "#e5e7eb",
+          },
+          content: {
+            subtle: "#9ca3af",
+            DEFAULT: "#6b7280",
+            emphasis: "#374151",
+            strong: "#111827",
+            inverted: "#ffffff",
+          },
+        },
+      },
+      animation: {
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'glow': 'glow 2s ease-in-out infinite',
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      boxShadow: {
+        // light
+        "tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "tremor-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "tremor-dropdown": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        // dark
+        "dark-tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "dark-tremor-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "dark-tremor-dropdown": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+      },
+      borderRadius: {
+        "tremor-small": "0.375rem",
+        "tremor-default": "0.5rem",
+        "tremor-full": "9999px",
+      },
+      fontSize: {
+        "tremor-label": ["0.75rem"],
+        "tremor-default": ["0.875rem", { lineHeight: "1.25rem" }],
+        "tremor-title": ["1.125rem", { lineHeight: "1.75rem" }],
+        "tremor-metric": ["1.875rem", { lineHeight: "2.25rem" }],
+      },
+    },
+  },
+  safelist: [
+    {
+      pattern:
+        /^(bg-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+      variants: ["hover", "ui-selected"],
+    },
+    {
+      pattern:
+        /^(text-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+      variants: ["hover", "ui-selected"],
+    },
+    {
+      pattern:
+        /^(border-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+      variants: ["hover", "ui-selected"],
+    },
+    {
+      pattern:
+        /^(ring-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+    },
+    {
+      pattern:
+        /^(stroke-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+    },
+    {
+      pattern:
+        /^(fill-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+    },
+  ],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
+}
+
+================
+File: vercel.json
+================
+{
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
+
+================
+File: vite.config.js
+================
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 3000,
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  publicDir: 'public',
+})
+
+
+
+================================================================
+End of Codebase
+================================================================

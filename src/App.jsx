@@ -1,95 +1,72 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Card, Title, Text, TabGroup, TabList, Tab, TabPanels, TabPanel, Grid, Col } from '@tremor/react';
 import { LineChart, AreaChart, ComposedChart, Bar, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import Papa from 'papaparse';
+import useCsvData from './hooks/useCsvData';
 import { processVehicleData, processHousingData, processRentData, combineDatasets } from './utils/dataProcessing';
 import LoadingSpinner from './components/LoadingSpinner';
+import ErrorDisplay from './components/ErrorDisplay';
 import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
-  const [combinedData, setCombinedData] = useState([]);
-  const [housingData, setHousingData] = useState([]);
-  const [rentData, setRentData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [selectedView, setSelectedView] = useState(0);
   const [selectedState, setSelectedState] = useState('All States');
-  const [availableStates, setAvailableStates] = useState(['All States']);
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setIsLoading(true);
-        const vehicleResponse = await fetch('/Motor_Vehicle_Registrations_Dashboard_data.csv');
-        const housingResponse = await fetch('/housing.csv');
-        const rentResponse = await fetch('/rent_primeR.csv');
+  // Centralized data fetching using custom hook
+  const { data: vehicleData, isLoading: loadingVehicle, error: errorVehicle } = useCsvData('/Motor_Vehicle_Registrations_Dashboard_data.csv');
+  const { data: housingData, isLoading: loadingHousing, error: errorHousing } = useCsvData('/housing.csv');
+  const { data: rentData, isLoading: loadingRent, error: errorRent } = useCsvData('/rent_primeR.csv');
 
-        const vehicleText = await vehicleResponse.text();
-        const housingText = await housingResponse.text();
-        const rentText = await rentResponse.text();
+  // Memoized data processing to avoid unnecessary re-computations
+  const processedVehicleData = useMemo(() => 
+    processVehicleData(vehicleData, selectedState === 'All States' ? null : selectedState), 
+    [vehicleData, selectedState]
+  );
 
-        const vehicleParsed = Papa.parse(vehicleText, { header: true });
-        const housingParsed = Papa.parse(housingText, { header: true });
-        const rentParsed = Papa.parse(rentText, { header: true });
+  const processedHousingData = useMemo(() => 
+    processHousingData(housingData), 
+    [housingData]
+  );
 
-        // Extract unique states and remove duplicates
-        const states = ['All States', ...new Set(
-          vehicleParsed.data
-            .map(row => row.state?.trim())
-            .filter(Boolean)
-            .map(state => state.replace(/\s*\(\d+\)$/, '')) // Remove trailing numbers in parentheses
-        )].sort();
-        
-        setAvailableStates(states);
+  const processedRentData = useMemo(() => 
+    processRentData(rentData), 
+    [rentData]
+  );
 
-        // Process data for all states initially
-        const vehicleData = processVehicleData(vehicleParsed.data);
-        const housingData = processHousingData(housingParsed.data);
-        const rentData = processRentData(rentParsed.data);
+  const combinedData = useMemo(() => 
+    combineDatasets(processedVehicleData, processedHousingData, processedRentData), 
+    [processedVehicleData, processedHousingData, processedRentData]
+  );
 
-        setCombinedData(combineDatasets(vehicleData, housingData, rentData));
-        setHousingData(housingData);
-        setRentData(rentData);
-      } catch (error) {
-        console.error('Error loading data:', error);
-        setError('Failed to load data. Please try again later.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  // Extract available states from vehicle data
+  const availableStates = useMemo(() => {
+    if (!vehicleData.length) return ['All States'];
+    
+    const states = ['All States', ...new Set(
+      vehicleData
+        .map(row => row.state?.trim())
+        .filter(Boolean)
+        .map(state => state.replace(/\s*\(\d+\)$/, '')) // Remove trailing numbers in parentheses
+    )].sort();
+    
+    return states;
+  }, [vehicleData]);
 
-    loadData();
-  }, []);
+  // Consolidated loading and error states
+  const isLoading = loadingVehicle || loadingHousing || loadingRent;
+  const errors = [];
+  if (errorVehicle) errors.push(`Vehicle data: ${errorVehicle}`);
+  if (errorHousing) errors.push(`Housing data: ${errorHousing}`);
+  if (errorRent) errors.push(`Rent data: ${errorRent}`);
 
-  // Update effect to handle state selection
-  useEffect(() => {
-    if (!isLoading && selectedState !== 'All States') {
-      const updateDataForState = async () => {
-        try {
-          const vehicleResponse = await fetch('/Motor_Vehicle_Registrations_Dashboard_data.csv');
-          const vehicleText = await vehicleResponse.text();
-          const vehicleParsed = Papa.parse(vehicleText, { header: true });
-          
-          // Clean the state data before processing
-          const cleanedData = vehicleParsed.data.map(row => ({
-            ...row,
-            state: row.state?.replace(/\s*\(\d+\)$/, '').trim() // Remove any trailing numbers
-          }));
-          
-          const vehicleData = processVehicleData(cleanedData, selectedState);
-          const combinedStateData = combineDatasets(vehicleData, housingData, rentData);
-          setCombinedData(combinedStateData);
-        } catch (error) {
-          console.error('Error updating state data:', error);
-        }
-      };
+  // Show loading spinner while data is being fetched
+  if (isLoading) {
+    return <LoadingSpinner message="Loading Economic Data..." />;
+  }
 
-      updateDataForState();
-    }
-  }, [selectedState, isLoading]);
-
-  if (isLoading) return <LoadingSpinner />;
-  if (error) return <ErrorDisplay error={error} />;
+  // Show error display if any data failed to load
+  if (errors.length > 0) {
+    return <ErrorDisplay error={`Failed to load: ${errors.join(', ')}`} />;
+  }
 
   return (
     <div className="min-h-screen bg-[#020924] relative overflow-hidden">
@@ -129,7 +106,7 @@ function App() {
               <select
                 value={selectedState}
                 onChange={(e) => setSelectedState(e.target.value)}
-                className="bg-[#041138] text-blue-200 border border-blue-900 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-[#041138] text-blue-200 border border-blue-900 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
               >
                 {availableStates.map(state => (
                   <option key={state} value={state}>{state}</option>
@@ -222,7 +199,7 @@ function App() {
                     </Title>
                     <div className="h-72">
                       <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={housingData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                        <AreaChart data={processedHousingData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
                           <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
                           <XAxis dataKey="year" stroke="#93c5fd" />
                           <YAxis stroke="#93c5fd" />
@@ -248,7 +225,7 @@ function App() {
                     </Title>
                     <div className="h-72">
                       <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={rentData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                        <AreaChart data={processedRentData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
                           <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
                           <XAxis dataKey="year" stroke="#93c5fd" />
                           <YAxis stroke="#93c5fd" />
@@ -462,38 +439,6 @@ function App() {
           </div>
         </div>
       </footer>
-    </div>
-  );
-}
-
-function ErrorDisplay({ error }) {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-[#020924]">
-      <div className="max-w-md w-full bg-[#041138] shadow-xl rounded-xl border border-blue-900 p-8">
-        <div className="text-center">
-          <svg
-            className="mx-auto h-12 w-12 text-red-500"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-            />
-          </svg>
-          <h3 className="mt-4 text-lg font-medium text-white">Error Loading Data</h3>
-          <p className="mt-2 text-sm text-blue-200">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
     </div>
   );
 }

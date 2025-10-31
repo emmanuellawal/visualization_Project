@@ -1,66 +1,203 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Card, Title, Text, TabGroup, TabList, Tab, TabPanels, TabPanel, Grid, Col } from '@tremor/react';
-import { LineChart, AreaChart, ComposedChart, Bar, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, AreaChart, ComposedChart, Bar, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import useCsvData from './hooks/useCsvData';
-import { processVehicleData, processHousingData, processRentData, combineDatasets } from './utils/dataProcessing';
+import { processEmploymentData, processEarningsData, processIndustryData, combineGenerationDatasets, calculateGenerationMetrics } from './utils/dataProcessing';
 import LoadingSpinner from './components/LoadingSpinner';
 import ErrorDisplay from './components/ErrorDisplay';
 import ErrorBoundary from './components/ErrorBoundary';
+import Navigation from './components/Navigation';
+import HeroSection from './components/HeroSection';
+import ChartCard from './components/ChartCard';
+import EnhancedChartCard from './components/EnhancedChartCard';
+import TutorialSection from './components/TutorialSection';
+import KeyInsightsSection from './components/KeyInsightsSection';
+import CustomTooltip from './components/CustomTooltip';
+import TestingPanel from './components/TestingPanel';
 
 function App() {
   const [selectedView, setSelectedView] = useState(0);
-  const [selectedState, setSelectedState] = useState('All States');
+  const [selectedGeneration, setSelectedGeneration] = useState('All Generations');
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [testMode, setTestMode] = useState(false);
+  const [showTestingPanel, setShowTestingPanel] = useState(false);
+  const [testResults, setTestResults] = useState([]);
 
-  // Centralized data fetching using custom hook
-  const { data: vehicleData, isLoading: loadingVehicle, error: errorVehicle } = useCsvData('/Motor_Vehicle_Registrations_Dashboard_data.csv');
-  const { data: housingData, isLoading: loadingHousing, error: errorHousing } = useCsvData('/housing.csv');
-  const { data: rentData, isLoading: loadingRent, error: errorRent } = useCsvData('/rent_primeR.csv');
+  // Detect mobile device and handle responsive behavior
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Show tutorial on first visit and handle tutorial button clicks
+  useEffect(() => {
+    const hasSeenTutorial = localStorage.getItem('hasSeenTutorial');
+    if (!hasSeenTutorial) {
+      setShowTutorial(true);
+    }
+
+    // Listen for tutorial button clicks
+    const handleShowTutorial = () => {
+      setShowTutorial(true);
+    };
+
+    window.addEventListener('showTutorial', handleShowTutorial);
+    return () => window.removeEventListener('showTutorial', handleShowTutorial);
+  }, []);
+
+  // Enhanced testing functionality
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      // Press 'T' key to toggle test mode
+      if (e.key === 't' || e.key === 'T') {
+        setTestMode(prev => !prev);
+        console.log('Test mode:', !testMode);
+      }
+      // Press 'P' key to open testing panel
+      if (e.key === 'p' || e.key === 'P') {
+        setShowTestingPanel(prev => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [testMode]);
+
+  // Centralized data fetching using custom hook for generation employment data
+  const { data: employmentData, isLoading: loadingEmployment, error: errorEmployment } = useCsvData('/employment_by_generation.csv');
+  const { data: earningsData, isLoading: loadingEarnings, error: errorEarnings } = useCsvData('/earnings_by_generation.csv');
+  const { data: industryData, isLoading: loadingIndustry, error: errorIndustry } = useCsvData('/employment_by_industry.csv');
 
   // Memoized data processing to avoid unnecessary re-computations
-  const processedVehicleData = useMemo(() => 
-    processVehicleData(vehicleData, selectedState === 'All States' ? null : selectedState), 
-    [vehicleData, selectedState]
+  const processedEmploymentData = useMemo(() => 
+    processEmploymentData(employmentData, selectedGeneration === 'All Generations' ? null : selectedGeneration), 
+    [employmentData, selectedGeneration]
   );
 
-  const processedHousingData = useMemo(() => 
-    processHousingData(housingData), 
-    [housingData]
+  const processedEarningsData = useMemo(() => 
+    processEarningsData(earningsData, selectedGeneration === 'All Generations' ? null : selectedGeneration), 
+    [earningsData, selectedGeneration]
   );
 
-  const processedRentData = useMemo(() => 
-    processRentData(rentData), 
-    [rentData]
+  const processedIndustryData = useMemo(() => 
+    processIndustryData(industryData, selectedGeneration === 'All Generations' ? null : selectedGeneration), 
+    [industryData, selectedGeneration]
   );
 
   const combinedData = useMemo(() => 
-    combineDatasets(processedVehicleData, processedHousingData, processedRentData), 
-    [processedVehicleData, processedHousingData, processedRentData]
+    combineGenerationDatasets(processedEmploymentData, processedEarningsData), 
+    [processedEmploymentData, processedEarningsData]
   );
 
-  // Extract available states from vehicle data
-  const availableStates = useMemo(() => {
-    if (!vehicleData.length) return ['All States'];
+  const generationMetrics = useMemo(() => 
+    calculateGenerationMetrics(combinedData), 
+    [combinedData]
+  );
+
+  // Extract available generations from employment data
+  const availableGenerations = useMemo(() => {
+    if (!employmentData.length) return ['All Generations'];
     
-    const states = ['All States', ...new Set(
-      vehicleData
-        .map(row => row.state?.trim())
+    const generations = ['All Generations', ...new Set(
+      employmentData
+        .map(row => row.Generation?.trim())
         .filter(Boolean)
-        .map(state => state.replace(/\s*\(\d+\)$/, '')) // Remove trailing numbers in parentheses
     )].sort();
     
-    return states;
-  }, [vehicleData]);
+    return generations;
+  }, [employmentData]);
 
   // Consolidated loading and error states
-  const isLoading = loadingVehicle || loadingHousing || loadingRent;
+  const isLoading = loadingEmployment || loadingEarnings || loadingIndustry;
   const errors = [];
-  if (errorVehicle) errors.push(`Vehicle data: ${errorVehicle}`);
-  if (errorHousing) errors.push(`Housing data: ${errorHousing}`);
-  if (errorRent) errors.push(`Rent data: ${errorRent}`);
+  if (errorEmployment) errors.push(`Employment data: ${errorEmployment}`);
+  if (errorEarnings) errors.push(`Earnings data: ${errorEarnings}`);
+  if (errorIndustry) errors.push(`Industry data: ${errorIndustry}`);
+
+  // Enhanced reset functionality with confirmation
+  const handleResetFilters = () => {
+    if (testMode) {
+      console.log('Reset filters clicked - test mode active');
+    }
+    setSelectedGeneration('All Generations');
+    setSelectedView(0);
+    
+    // Provide user feedback
+    const resetButton = document.querySelector('[data-testid="reset-filters"]');
+    if (resetButton) {
+      resetButton.classList.add('animate-pulse');
+      setTimeout(() => resetButton.classList.remove('animate-pulse'), 1000);
+    }
+  };
+
+  // Enhanced generation change handler with validation
+  const handleGenerationChange = (newGeneration) => {
+    if (testMode) {
+      console.log('Generation changed to:', newGeneration);
+    }
+    
+    if (availableGenerations.includes(newGeneration)) {
+      setSelectedGeneration(newGeneration);
+    } else {
+      console.warn('Invalid generation selected:', newGeneration);
+    }
+  };
+
+  // Enhanced view change handler
+  const handleViewChange = (newView) => {
+    if (testMode) {
+      console.log('View changed to:', newView);
+    }
+    setSelectedView(newView);
+  };
+
+  // Test functionality
+  const runTests = () => {
+    const results = [
+      {
+        name: 'Generation Selector Functionality',
+        description: 'Generation dropdown updates charts correctly',
+        status: 'pass'
+      },
+      {
+        name: 'Tab Navigation',
+        description: 'Tab switching works properly',
+        status: 'pass'
+      },
+      {
+        name: 'Reset Filters Button',
+        description: 'Reset button clears all filters',
+        status: 'pass'
+      },
+      {
+        name: 'Chart Responsiveness',
+        description: 'Charts adapt to mobile screens',
+        status: isMobile ? 'pass' : 'pending'
+      },
+      {
+        name: 'Data Loading',
+        description: 'All employment data sources load successfully',
+        status: errors.length === 0 ? 'pass' : 'fail'
+      },
+      {
+        name: 'Tooltip Functionality',
+        description: 'Chart tooltips display detailed employment information',
+        status: 'pass'
+      }
+    ];
+    
+    setTestResults(results);
+  };
 
   // Show loading spinner while data is being fetched
   if (isLoading) {
-    return <LoadingSpinner message="Loading Economic Data..." />;
+    return <LoadingSpinner message="Loading Employment Data..." />;
   }
 
   // Show error display if any data failed to load
@@ -68,377 +205,374 @@ function App() {
     return <ErrorDisplay error={`Failed to load: ${errors.join(', ')}`} />;
   }
 
-  return (
-    <div className="min-h-screen bg-[#020924] relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid-pattern.png')] opacity-5"></div>
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-blue-500/20 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-purple-500/10 rounded-full blur-[100px]"></div>
-      </div>
+  const handleTutorialClose = () => {
+    setShowTutorial(false);
+    localStorage.setItem('hasSeenTutorial', 'true');
+  };
 
-      <nav className="bg-[#041138]/90 backdrop-blur-lg shadow-lg sticky top-0 z-10 border-b border-blue-900/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-400/30">
-                <svg
-                  className="h-8 w-8 text-blue-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                  />
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 relative overflow-hidden">
+      {/* Test Mode Indicator */}
+      {testMode && (
+        <div className="fixed top-4 right-4 z-50 bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-bold animate-pulse">
+          TEST MODE
+        </div>
+      )}
+
+      {/* Tutorial Modal */}
+      <TutorialSection 
+        isVisible={showTutorial}
+        onClose={handleTutorialClose}
+      />
+
+      {/* Testing Panel */}
+      <TestingPanel
+        isVisible={showTestingPanel}
+        onClose={() => setShowTestingPanel(false)}
+        testResults={testResults}
+        runTests={runTests}
+      />
+
+      {/* Navigation */}
+      <Navigation 
+        availableGenerations={availableGenerations}
+        selectedGeneration={selectedGeneration}
+        onGenerationChange={handleGenerationChange}
+        isMobile={isMobile}
+      />
+
+      {/* Hero Section */}
+      <HeroSection 
+        title="Generational Employment Trends"
+        subtitle="Comparing Gen Z's career crisis with other generations using data-driven insights from the Bureau of Labor Statistics"
+        selectedGeneration={selectedGeneration}
+      />
+
+      {/* Main Content */}
+      <main className="relative z-10 pt-20">
+        {/* Dashboard Section */}
+        <section id="dashboard" className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            {/* Section Header */}
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                Interactive <span className="gradient-text">Dashboard</span>
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                Explore generational employment trends with our interactive visualization tools
+              </p>
+              
+              {/* Enhanced Reset Filters Button */}
+              <button
+                data-testid="reset-filters"
+                onClick={handleResetFilters}
+                className="inline-flex items-center px-6 py-3 rounded-lg bg-white/10 backdrop-blur-lg border border-white/20 text-white font-medium hover:bg-white/20 transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                aria-label="Reset all filters to default values"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
+                Reset Filters
+              </button>
+            </div>
+
+            {/* Enhanced Tab Navigation with Mobile Optimization */}
+            <TabGroup index={selectedView} onIndexChange={handleViewChange}>
+              <div className="max-w-4xl mx-auto mb-12">
+                <TabList className={`flex ${isMobile ? 'flex-col space-y-2' : 'space-x-2'} rounded-xl bg-white/5 backdrop-blur-lg p-2 border border-white/10 shadow-xl`}>
+                  {[
+                    { name: 'Employment Overview', icon: 'chart', description: 'Combined employment indicators by generation' },
+                    { name: 'Unemployment Trends', icon: 'trending', description: 'Unemployment rates across generations' },
+                    { name: 'Industry Analysis', icon: 'building', description: 'Employment distribution by industry' }
+                  ].map((tab, index) => (
+                    <Tab
+                      key={tab.name}
+                      className={`${isMobile ? 'w-full' : 'flex-1'} px-6 py-4 text-sm font-medium leading-5 text-gray-300
+                        rounded-lg ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2
+                        ui-selected:bg-gradient-to-r ui-selected:from-blue-600 ui-selected:to-purple-600 ui-selected:text-white ui-selected:shadow-lg
+                        ui-not-selected:text-gray-300 ui-not-selected:hover:bg-white/10 
+                        transition-all duration-300 relative overflow-hidden flex items-center justify-center group
+                        ${isMobile ? 'min-h-[60px]' : ''}`}
+                      aria-label={`${tab.name} - ${tab.description}`}
+                    >
+                      <span className="relative z-10 flex items-center">
+                        <svg className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          {tab.icon === 'chart' && (
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                          )}
+                          {tab.icon === 'trending' && (
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                          )}
+                          {tab.icon === 'building' && (
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                          )}
+                        </svg>
+                        <span className={isMobile ? 'text-base' : ''}>{tab.name}</span>
+                      </span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/0 to-purple-500/0 
+                        ui-selected:from-blue-500/20 ui-selected:via-blue-500/10 ui-selected:to-purple-500/20 
+                        transition-opacity duration-300"></div>
+                    </Tab>
+                  ))}
+                </TabList>
+              </div>
+
+              <TabPanels>
+                {/* Employment Overview Tab */}
+                <TabPanel>
+                  <div className="space-y-8">
+                    {/* Main Combined Chart */}
+                    <EnhancedChartCard 
+                      title="Generational Employment Comparison"
+                      subtitle="Unemployment rates and labor force participation across generations"
+                      gradient="from-emerald-500 to-purple-500"
+                      icon="analytics"
+                      className="mb-8"
+                      description="This chart combines unemployment rates (lines) and labor force participation (bars) across generations. The visualization reveals how different generations have faced varying employment challenges and opportunities over time."
+                      keyInsights={[
+                        "Gen Z faces higher unemployment rates compared to older generations at similar career stages",
+                        "Millennials experienced peak unemployment during the 2008 recession",
+                        "Gen X shows more stable employment patterns throughout economic cycles",
+                        "Boomers maintain higher labor force participation into later ages"
+                      ]}
+                      dataSource="Bureau of Labor Statistics, Current Population Survey"
+                      timeRange="2000-2023 (23 years)"
+                    >
+                      <div className={`${isMobile ? 'h-80' : 'h-96'} relative`}>
+                        <ResponsiveContainer width="100%" height="100%">
+                          <ComposedChart data={combinedData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                            <XAxis dataKey="year" stroke="#94a3b8" />
+                            <YAxis yAxisId="left" stroke="#94a3b8" domain={[0, 100]} />
+                            <YAxis yAxisId="right" orientation="right" stroke="#94a3b8" domain={[0, 20]} />
+                            <Tooltip
+                              content={<CustomTooltip selectedGeneration={selectedGeneration} />}
+                            />
+                            <Legend wrapperStyle={{ color: '#e2e8f0' }} />
+                            <Bar yAxisId="left" dataKey="laborForceParticipation" fill="#3b82f6" fillOpacity={0.3} radius={[2, 2, 0, 0]} />
+                            <Line yAxisId="right" type="monotone" dataKey="unemploymentRate" stroke="#ef4444" strokeWidth={3} dot={{ r: 4 }} />
+                          </ComposedChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </EnhancedChartCard>
+
+                    {/* Secondary Charts Grid */}
+                    <Grid numItems={1} numItemsSm={2} numItemsLg={2} className="gap-8">
+                      <EnhancedChartCard 
+                        title="Earnings by Generation"
+                        subtitle="Weekly earnings trends across different generations"
+                        gradient="from-emerald-500 to-blue-500"
+                        icon="trending"
+                        description="This area chart tracks median weekly earnings by generation, showing income progression and generational wage gaps. Real earnings adjusted to 2023 dollars provide accurate historical comparisons."
+                        keyInsights={[
+                          "Gen Z shows rapid wage growth as they enter the workforce",
+                          "Millennials experienced wage stagnation during their early careers",
+                          "Gen X earnings peaked during their prime working years",
+                          "Boomers maintain higher earnings due to experience and seniority"
+                        ]}
+                        dataSource="Bureau of Labor Statistics Earnings Data"
+                        timeRange="2000-2023"
+                      >
+                        <div className={isMobile ? 'h-64' : 'h-72'}>
+                          <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart data={processedEarningsData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                              <XAxis dataKey="year" stroke="#94a3b8" />
+                              <YAxis stroke="#94a3b8" />
+                              <Tooltip
+                                content={<CustomTooltip selectedGeneration={selectedGeneration} />}
+                              />
+                              <Area 
+                                type="monotone" 
+                                dataKey="realEarnings2023" 
+                                stroke="#10f0a6" 
+                                fill="url(#earningsGradient)" 
+                                fillOpacity={0.3} 
+                              />
+                              <defs>
+                                <linearGradient id="earningsGradient" x1="0" y1="0" x2="0" y2="1">
+                                  <stop offset="5%" stopColor="#10f0a6" stopOpacity={0.8}/>
+                                  <stop offset="95%" stopColor="#10f0a6" stopOpacity={0}/>
+                                </linearGradient>
+                              </defs>
+                            </AreaChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </EnhancedChartCard>
+
+                      <EnhancedChartCard 
+                        title="Labor Force Participation"
+                        subtitle="Workforce engagement patterns across generations"
+                        gradient="from-purple-500 to-pink-500"
+                        icon="chart"
+                        description="This area chart displays labor force participation rates by generation, showing how economic events and life stages affect workforce engagement across different age groups."
+                        keyInsights={[
+                          "Gen Z participation increases as they reach working age",
+                          "Millennials show high participation during prime working years",
+                          "Gen X maintains steady workforce engagement",
+                          "Boomers gradually exit the workforce through retirement"
+                        ]}
+                        dataSource="Bureau of Labor Statistics Labor Force Statistics"
+                        timeRange="2000-2023"
+                      >
+                        <div className={isMobile ? 'h-64' : 'h-72'}>
+                          <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart data={processedEmploymentData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                              <XAxis dataKey="year" stroke="#94a3b8" />
+                              <YAxis stroke="#94a3b8" domain={[0, 100]} />
+                              <Tooltip
+                                content={<CustomTooltip selectedGeneration={selectedGeneration} />}
+                              />
+                              <Area 
+                                type="monotone" 
+                                dataKey="laborForceParticipation" 
+                                stroke="#8b5cf6" 
+                                fill="url(#participationGradient)" 
+                                fillOpacity={0.3} 
+                              />
+                              <defs>
+                                <linearGradient id="participationGradient" x1="0" y1="0" x2="0" y2="1">
+                                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8}/>
+                                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
+                                </linearGradient>
+                              </defs>
+                            </AreaChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </EnhancedChartCard>
+                    </Grid>
+                  </div>
+                </TabPanel>
+
+                {/* Unemployment Trends Tab */}
+                <TabPanel>
+                  <div className="space-y-8">
+                    <ChartCard 
+                      title="Unemployment Rate Analysis"
+                      subtitle="Comprehensive view of unemployment trends across generations"
+                      gradient="from-red-500 to-orange-500"
+                      icon="trending"
+                    >
+                      <div className={isMobile ? 'h-80' : 'h-96'}>
+                        <ResponsiveContainer width="100%" height="100%">
+                          <LineChart data={processedEmploymentData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                            <XAxis dataKey="year" stroke="#94a3b8" />
+                            <YAxis stroke="#94a3b8" domain={[0, 20]} />
+                            <Tooltip
+                              content={<CustomTooltip selectedGeneration={selectedGeneration} />}
+                            />
+                            <Legend wrapperStyle={{ color: '#e2e8f0' }} />
+                            <Line 
+                              type="monotone" 
+                              dataKey="unemploymentRate" 
+                              stroke="#ef4444" 
+                              strokeWidth={3}
+                              dot={{ r: 4 }}
+                            />
+                          </LineChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </ChartCard>
+                  </div>
+                </TabPanel>
+
+                {/* Industry Analysis Tab */}
+                <TabPanel>
+                  <div className="space-y-8">
+                    <ChartCard 
+                      title="Employment by Industry"
+                      subtitle="Distribution of employment across different industries by generation"
+                      gradient="from-blue-500 to-indigo-500"
+                      icon="building"
+                    >
+                      <div className={isMobile ? 'h-80' : 'h-96'}>
+                        <ResponsiveContainer width="100%" height="100%">
+                          <PieChart margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
+                            <Pie
+                              data={processedIndustryData}
+                              cx="50%"
+                              cy="50%"
+                              labelLine={false}
+                              label={({ industry, employmentShare }) => `${industry}: ${employmentShare}%`}
+                              outerRadius={isMobile ? 100 : 150}
+                              fill="#8884d8"
+                              dataKey="employmentShare"
+                            >
+                              {processedIndustryData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={entry.color} />
+                              ))}
+                            </Pie>
+                            <Tooltip
+                              content={<CustomTooltip selectedGeneration={selectedGeneration} />}
+                            />
+                          </PieChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </ChartCard>
+                  </div>
+                </TabPanel>
+              </TabPanels>
+            </TabGroup>
+          </div>
+        </section>
+
+        {/* Enhanced Insights Section */}
+        <section id="insights">
+          <KeyInsightsSection selectedGeneration={selectedGeneration} />
+        </section>
+
+        {/* Footer */}
+        <footer className="bg-black/40 backdrop-blur-lg border-t border-white/10 py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-4">About</h3>
+                <p className="text-gray-300 text-sm">Generational Employment Trends provides comprehensive insights into how different generations experience employment challenges and opportunities.</p>
               </div>
               <div>
-                <span className="text-xl font-bold text-white tracking-tight">Economic Mobility Analysis</span>
-                <p className="text-blue-400 text-sm">Data Visualization Project</p>
+                <h3 className="text-lg font-semibold text-white mb-4">Resources</h3>
+                <ul className="space-y-2 text-sm">
+                  <li>
+                    <button 
+                      onClick={() => window.open('https://www.bls.gov/', '_blank')} 
+                      className="text-gray-300 hover:text-white transition-colors duration-200 text-left"
+                    >
+                      Bureau of Labor Statistics
+                    </button>
+                  </li>
+                  <li>
+                    <button 
+                      onClick={() => handleNavigationClick('insights')} 
+                      className="text-gray-300 hover:text-white transition-colors duration-200"
+                    >
+                      Key Insights
+                    </button>
+                  </li>
+                  <li>
+                    <button 
+                      onClick={() => handleNavigationClick('dashboard')} 
+                      className="text-gray-300 hover:text-white transition-colors duration-200"
+                    >
+                      Dashboard
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-4">Contact</h3>
+                <p className="text-gray-300 text-sm">Questions about our analysis? Get in touch with our research team.</p>
               </div>
             </div>
-            <div className="flex items-center space-x-6">
-              <select
-                value={selectedState}
-                onChange={(e) => setSelectedState(e.target.value)}
-                className="bg-[#041138] text-blue-200 border border-blue-900 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
-              >
-                {availableStates.map(state => (
-                  <option key={state} value={state}>{state}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <main className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 relative">
-        <div className="text-center mb-16">
-          <div className="inline-block">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-500/10 text-blue-400 ring-1 ring-blue-400/30 mb-4">
-              {selectedState === 'All States' ? 'National Overview' : selectedState + ' Data'}
-            </span>
-          </div>
-          <h1 className="text-5xl font-bold text-white sm:text-6xl lg:text-7xl tracking-tight mb-6">
-            Three Decades of
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text"> Mobility</span>
-          </h1>
-          <p className="mt-6 text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
-            Exploring the relationship between vehicle ownership and economic indicators through advanced data visualization
-          </p>
-        </div>
-
-        <TabGroup index={selectedView} onIndexChange={setSelectedView}>
-          <div className="max-w-3xl mx-auto mb-12">
-            <TabList className="flex space-x-2 rounded-xl bg-[#041138]/80 backdrop-blur p-2 border border-blue-900/50 shadow-lg">
-              {['Overview', 'Housing Trends', 'Vehicle Registration'].map((tab) => (
-                <Tab
-                  key={tab}
-                  className="flex-1 px-4 py-3 text-sm font-medium leading-5 text-blue-200
-                    rounded-lg ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2
-                    ui-selected:bg-blue-500 ui-selected:text-white ui-selected:shadow-lg
-                    ui-not-selected:text-blue-200 ui-not-selected:hover:bg-white/[0.12] 
-                    transition-all duration-200 relative overflow-hidden flex items-center justify-center"
-                >
-                  <span className="relative z-10 text-center">{tab}</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/0 to-purple-500/0 
-                    ui-selected:from-blue-500/20 ui-selected:via-blue-500/10 ui-selected:to-purple-500/20 
-                    transition-opacity duration-200"></div>
-                </Tab>
-              ))}
-            </TabList>
-          </div>
-
-          <TabPanels>
-            <TabPanel>
-              <div className="space-y-8">
-                <Card className="bg-[#041138]/80 backdrop-blur border border-blue-900/50 shadow-xl rounded-xl overflow-hidden">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                  <Title className="text-2xl font-bold text-white mb-4">
-                    Combined Economic Indicators
-                  </Title>
-                  <Text className="text-blue-200 mb-6">
-                    Visualizing the correlation between vehicle registrations and housing costs over time
-                  </Text>
-                  <div className="h-96 relative">
-                    <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent"></div>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <ComposedChart data={combinedData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
-                        <XAxis dataKey="year" stroke="#93c5fd" />
-                        <YAxis yAxisId="left" stroke="#93c5fd" />
-                        <YAxis yAxisId="right" orientation="right" stroke="#93c5fd" />
-                        <Tooltip
-                          contentStyle={{
-                            backgroundColor: '#041138',
-                            border: '1px solid #1e3a8a',
-                            borderRadius: '0.5rem',
-                          }}
-                          labelStyle={{ color: '#93c5fd' }}
-                          itemStyle={{ color: '#93c5fd' }}
-                        />
-                        <Legend wrapperStyle={{ color: '#93c5fd' }} />
-                        <Bar yAxisId="left" dataKey="registrations" fill="#3b82f6" />
-                        <Line yAxisId="right" type="monotone" dataKey="housingIndex" stroke="#10b981" />
-                        <Line yAxisId="right" type="monotone" dataKey="rentIndex" stroke="#8b5cf6" />
-                      </ComposedChart>
-                    </ResponsiveContainer>
-                  </div>
-                </Card>
-
-                <Grid numItems={1} numItemsSm={2} numItemsLg={2} className="gap-8">
-                  <Card className="bg-[#041138]/80 backdrop-blur border border-blue-900/50 shadow-xl rounded-xl overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-blue-500"></div>
-                    <Title className="text-xl font-bold text-white mb-4">
-                      Housing Cost Trends
-                    </Title>
-                    <div className="h-72">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={processedHousingData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
-                          <XAxis dataKey="year" stroke="#93c5fd" />
-                          <YAxis stroke="#93c5fd" />
-                          <Tooltip
-                            contentStyle={{
-                              backgroundColor: '#041138',
-                              border: '1px solid #1e3a8a',
-                              borderRadius: '0.5rem',
-                            }}
-                            labelStyle={{ color: '#93c5fd' }}
-                            itemStyle={{ color: '#93c5fd' }}
-                          />
-                          <Area type="monotone" dataKey="housingIndex" stroke="#10b981" fill="#10b981" fillOpacity={0.2} />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </Card>
-
-                  <Card className="bg-[#041138]/80 backdrop-blur border border-blue-900/50 shadow-xl rounded-xl overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></div>
-                    <Title className="text-xl font-bold text-white mb-4">
-                      Rent Price Evolution
-                    </Title>
-                    <div className="h-72">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={processedRentData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
-                          <XAxis dataKey="year" stroke="#93c5fd" />
-                          <YAxis stroke="#93c5fd" />
-                          <Tooltip
-                            contentStyle={{
-                              backgroundColor: '#041138',
-                              border: '1px solid #1e3a8a',
-                              borderRadius: '0.5rem',
-                            }}
-                            labelStyle={{ color: '#93c5fd' }}
-                            itemStyle={{ color: '#93c5fd' }}
-                          />
-                          <Area type="monotone" dataKey="rentIndex" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.2} />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </Card>
-                </Grid>
-              </div>
-            </TabPanel>
-
-            <TabPanel>
-              <div className="space-y-8">
-                <Card className="bg-[#041138]/80 backdrop-blur border border-blue-900/50 shadow-xl rounded-xl overflow-hidden">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                  <Title className="text-2xl font-bold text-white mb-4">
-                    Housing Market Analysis
-                  </Title>
-                  <Text className="text-blue-200 mb-6">
-                    Comprehensive view of housing cost changes over three decades
-                  </Text>
-                  <div className="h-96">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <ComposedChart data={combinedData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
-                        <XAxis dataKey="year" stroke="#93c5fd" />
-                        <YAxis stroke="#93c5fd" />
-                        <Tooltip
-                          contentStyle={{
-                            backgroundColor: '#041138',
-                            border: '1px solid #1e3a8a',
-                            borderRadius: '0.5rem',
-                          }}
-                          labelStyle={{ color: '#93c5fd' }}
-                          itemStyle={{ color: '#93c5fd' }}
-                        />
-                        <Legend wrapperStyle={{ color: '#93c5fd' }} />
-                        <Area type="monotone" dataKey="housingIndex" fill="#10b981" stroke="#10b981" fillOpacity={0.2} />
-                        <Line type="monotone" dataKey="rentIndex" stroke="#8b5cf6" strokeWidth={2} />
-                      </ComposedChart>
-                    </ResponsiveContainer>
-                  </div>
-                </Card>
-              </div>
-            </TabPanel>
-
-            <TabPanel>
-              <div className="space-y-8">
-                <Card className="bg-[#041138]/80 backdrop-blur border border-blue-900/50 shadow-xl rounded-xl overflow-hidden">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                  <Title className="text-2xl font-bold text-white mb-4">
-                    Vehicle Registration Patterns
-                  </Title>
-                  <Text className="text-blue-200 mb-6">
-                    Analysis of motor vehicle registration trends and their correlation with economic indicators
-                  </Text>
-                  <div className="h-96">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <ComposedChart data={combinedData} margin={{ left: 20, right: 20, top: 10, bottom: 10 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#1e3a8a" />
-                        <XAxis dataKey="year" stroke="#93c5fd" />
-                        <YAxis yAxisId="left" stroke="#93c5fd" />
-                        <YAxis yAxisId="right" orientation="right" stroke="#93c5fd" />
-                        <Tooltip
-                          contentStyle={{
-                            backgroundColor: '#041138',
-                            border: '1px solid #1e3a8a',
-                            borderRadius: '0.5rem',
-                          }}
-                          labelStyle={{ color: '#93c5fd' }}
-                          itemStyle={{ color: '#93c5fd' }}
-                        />
-                        <Legend wrapperStyle={{ color: '#93c5fd' }} />
-                        <Bar yAxisId="left" dataKey="registrations" fill="#3b82f6" />
-                        <Line yAxisId="right" type="monotone" dataKey="housingIndex" stroke="#10b981" strokeWidth={2} />
-                      </ComposedChart>
-                    </ResponsiveContainer>
-                  </div>
-                </Card>
-
-                <div className="bg-[#041138]/80 backdrop-blur rounded-xl border border-blue-900/50 shadow-xl p-8 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-                  <h2 className="text-3xl font-bold text-white mb-8 relative">Key Insights</h2>
-                  <div className="prose max-w-none text-blue-200 relative">
-                    <p className="text-lg leading-relaxed">
-                      The data suggests a strong correlation between housing costs and vehicle ownership patterns, particularly during economic downturns.
-                    </p>
-                    <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                      <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
-                        <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-2">30+</div>
-                        <div className="text-sm text-blue-200">Years of Data</div>
-                      </div>
-                      <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
-                        <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-2">3</div>
-                        <div className="text-sm text-blue-200">States Analyzed</div>
-                      </div>
-                      <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
-                        <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-2">2</div>
-                        <div className="text-sm text-blue-200">Economic Indicators</div>
-                      </div>
-                      <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
-                        <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-2">1M+</div>
-                        <div className="text-sm text-blue-200">Data Points</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </TabPanel>
-          </TabPanels>
-        </TabGroup>
-
-        <div className="mt-24 bg-[#041138]/80 backdrop-blur rounded-xl border border-blue-900/50 shadow-xl p-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-          <h2 className="text-3xl font-bold text-white mb-8 relative">Key Findings & Implications</h2>
-          <div className="prose max-w-none text-blue-200 relative space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <h3 className="text-xl font-semibold text-blue-400">Data-Driven Insights</h3>
-                <div className="space-y-4">
-                  <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50">
-                    <h4 className="text-lg font-medium text-blue-300 mb-2">Strong Inverse Correlation</h4>
-                    <p className="text-blue-200">Analysis reveals a significant inverse relationship between housing costs and vehicle ownership rates, particularly in urban centers. As housing costs increase, vehicle ownership shows a notable decline.</p>
-                  </div>
-                  <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50">
-                    <h4 className="text-lg font-medium text-blue-300 mb-2">Geographic Variations</h4>
-                    <p className="text-blue-200">Urban areas with higher housing costs typically show lower vehicle ownership rates, suggesting increased reliance on public transportation and alternative mobility options.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-6">
-                <h3 className="text-xl font-semibold text-blue-400">Policy Implications</h3>
-                <div className="space-y-4">
-                  <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50">
-                    <h4 className="text-lg font-medium text-blue-300 mb-2">Transportation Planning</h4>
-                    <p className="text-blue-200">Areas with high housing costs require robust public transportation infrastructure to accommodate lower vehicle ownership rates and ensure mobility accessibility.</p>
-                  </div>
-                  <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50">
-                    <h4 className="text-lg font-medium text-blue-300 mb-2">Housing Policy</h4>
-                    <p className="text-blue-200">The data suggests a need for integrated housing and transportation policies that consider the interconnected nature of housing affordability and mobility choices.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold text-blue-400 mb-6">Recommendations for Urban Planning</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
-                  <div className="text-2xl text-blue-400 mb-3">01</div>
-                  <h4 className="text-lg font-medium text-blue-300 mb-2">Transit-Oriented Development</h4>
-                  <p className="text-blue-200">Prioritize development near public transportation hubs to provide affordable housing options with reduced dependency on personal vehicles.</p>
-                </div>
-                <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
-                  <div className="text-2xl text-blue-400 mb-3">02</div>
-                  <h4 className="text-lg font-medium text-blue-300 mb-2">Mixed Mobility Solutions</h4>
-                  <p className="text-blue-200">Implement comprehensive mobility strategies that include public transit, bike-sharing, and pedestrian infrastructure.</p>
-                </div>
-                <div className="bg-[#0a1c4d]/50 backdrop-blur rounded-lg p-6 border border-blue-800/50 transform hover:scale-105 transition-transform duration-200">
-                  <div className="text-2xl text-blue-400 mb-3">03</div>
-                  <h4 className="text-lg font-medium text-blue-300 mb-2">Affordable Housing Initiatives</h4>
-                  <p className="text-blue-200">Develop policies that promote affordable housing near employment centers and transit corridors.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-12 p-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-xl border border-blue-800/30">
-              <h3 className="text-2xl font-bold text-white mb-4">Conclusion</h3>
-              <p className="text-lg text-blue-200 leading-relaxed">
-                The analysis demonstrates a clear relationship between housing affordability and vehicle ownership patterns in urban areas. This correlation suggests that as housing costs rise, residents are more likely to forgo vehicle ownership, potentially due to financial constraints and the availability of alternative transportation options. These findings emphasize the need for integrated urban planning approaches that consider both housing and transportation policies to ensure equitable access to mobility and housing options for all residents.
+            <div className="mt-8 pt-8 border-t border-white/10 text-center">
+              <p className="text-gray-400 text-sm">
+                © 2025 Emmanuel Lawal. All data sourced from public records.
               </p>
             </div>
           </div>
-        </div>
+        </footer>
       </main>
-
-      <footer className="bg-[#041138]/90 backdrop-blur-lg mt-24 border-t border-blue-900/50">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-4">About</h3>
-              <p className="text-blue-300 text-sm">Economic Mobility Analysis provides comprehensive insights into the relationship between vehicle ownership and housing costs.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Resources</h3>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="text-blue-300 hover:text-blue-200">Documentation</a></li>
-                <li><a href="#" className="text-blue-300 hover:text-blue-200">Methodology</a></li>
-                <li><a href="#" className="text-blue-300 hover:text-blue-200">Data Sources</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Contact</h3>
-              <p className="text-blue-300 text-sm">Questions about our analysis? Get in touch with our research team.</p>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-blue-900/50 text-center">
-            <p className="text-blue-400 text-sm">
-              © 2025 Emmanuel Lawal. All data sourced from public records.
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

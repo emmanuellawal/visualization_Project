@@ -9,101 +9,198 @@ const normalizeValue = (value) => {
 };
 
 /**
- * Validates if a year is within the expected range (1990-2024)
+ * Validates if a year is within the expected range (2000-2025)
  * @param {string|number} year - The year to validate
  * @returns {boolean} True if year is valid, false otherwise
  */
 const validateYear = (year) => {
   const parsed = parseInt(year);
-  return !isNaN(parsed) && parsed >= 1990 && parsed <= 2024;
+  return !isNaN(parsed) && parsed >= 2000 && parsed <= 2025;
 };
 
 /**
- * Cleans state names by removing trailing numbers and whitespace
- * @param {string} state - The state name to clean
- * @returns {string} Cleaned state name or 'All States' if empty
+ * Gets generation color for charts
+ * @param {string} generation - The generation name
+ * @returns {string} Hex color code
  */
-const cleanStateName = (state) => {
-  if (!state) return 'All States';
-  return state.replace(/\s*\(\d+\)$/, '').trim();
+const getGenerationColor = (generation) => {
+  const colors = {
+    'Gen Z': '#10f0a6',
+    'Millennials': '#ff6b35', 
+    'Gen X': '#4ecdc4',
+    'Boomers': '#9b59b6'
+  };
+  return colors[generation] || '#8b5cf6';
 };
 
 /**
- * Calculates average vehicle registrations by year for a given state
- * @param {Array<Object>} data - Raw vehicle data from CSV
- * @param {string|null} stateFilter - State to filter by, or null for all states
- * @returns {Array<Object>} Processed data with year, registrations, and state
+ * Processes employment data by generation
+ * @param {Array<Object>} data - Raw employment data from CSV
+ * @param {string|null} generationFilter - Generation to filter by, or null for all
+ * @returns {Array<Object>} Processed data with year, unemployment rate, and generation
  */
-const calculateAverageByYear = (data, stateFilter = null) => {
-  const yearMap = new Map();
-  
-  data.forEach(row => {
-    const cleanedState = cleanStateName(row.state);
-    if (!stateFilter || cleanedState === stateFilter) {
-      const year = parseInt(row.year);
-      if (validateYear(year)) {
-        const auto = parseInt(row.Auto) || 0;
-        const motorcycle = parseInt(row.Motorcycle) || 0;
-        
-        if (!yearMap.has(year)) {
-          yearMap.set(year, { total: 0, count: 0 });
-        }
-        
-        const entry = yearMap.get(year);
-        entry.total += (auto + motorcycle);
-        entry.count += 1;
-      }
-    }
-  });
-  
-  return Array.from(yearMap.entries())
-    .map(([year, data]) => ({
-      year: year.toString(),
-      registrations: Math.round(data.total / data.count),
-      state: stateFilter || 'All States'
-    }))
-    .sort((a, b) => parseInt(a.year) - parseInt(b.year));
-};
-
-/**
- * Processes vehicle registration data, filtering by state if specified
- * @param {Array<Object>} data - Raw vehicle data from CSV
- * @param {string|null} stateFilter - State to filter by, or null for all states
- * @returns {Array<Object>} Processed data with year, registrations, and state
- */
-export const processVehicleData = (data, stateFilter = null) => {
+export const processEmploymentData = (data, generationFilter = null) => {
   if (!Array.isArray(data)) {
-    console.warn('processVehicleData: Invalid data provided, expected array');
-    return [];
-  }
-  
-  return calculateAverageByYear(data, stateFilter);
-};
-
-/**
- * Processes housing data, filtering by state if specified
- * @param {Array<Object>} data - Raw housing data from CSV
- * @param {string|null} stateFilter - State to filter by, or null for all states
- * @returns {Array<Object>} Processed data with year, housingIndex, and state
- */
-export const processHousingData = (data, stateFilter = null) => {
-  if (!Array.isArray(data)) {
-    console.warn('processHousingData: Invalid data provided, expected array');
+    console.warn('processEmploymentData: Invalid data provided, expected array');
     return [];
   }
 
   return data
     .filter(row => {
       const year = parseInt(row.Year);
-      const cleanedState = cleanStateName(row.State);
-      return validateYear(year) && (!stateFilter || cleanedState === stateFilter);
+      return validateYear(year) && (!generationFilter || row.Generation === generationFilter);
     })
     .map(row => ({
-      year: row.Year.toString(),
-      housingIndex: normalizeValue(row.Annual),
-      state: cleanStateName(row.State)
+      year: parseInt(row.Year),
+      generation: row.Generation,
+      unemploymentRate: normalizeValue(row.Unemployment_Rate),
+      laborForceParticipation: normalizeValue(row.Labor_Force_Participation_Rate),
+      laborForce: normalizeValue(row.Labor_Force),
+      employed: normalizeValue(row.Employed),
+      unemployed: normalizeValue(row.Unemployed),
+      color: getGenerationColor(row.Generation)
     }))
-    .sort((a, b) => parseInt(a.year) - parseInt(b.year));
+    .sort((a, b) => a.year - b.year);
+};
+
+/**
+ * Processes earnings data by generation
+ * @param {Array<Object>} data - Raw earnings data from CSV
+ * @param {string|null} generationFilter - Generation to filter by, or null for all
+ * @returns {Array<Object>} Processed data with year, earnings, and generation
+ */
+export const processEarningsData = (data, generationFilter = null) => {
+  if (!Array.isArray(data)) {
+    console.warn('processEarningsData: Invalid data provided, expected array');
+    return [];
+  }
+
+  return data
+    .filter(row => {
+      const year = parseInt(row.Year);
+      return validateYear(year) && (!generationFilter || row.Generation === generationFilter);
+    })
+    .map(row => ({
+      year: parseInt(row.Year),
+      generation: row.Generation,
+      medianWeeklyEarnings: normalizeValue(row.Median_Weekly_Earnings),
+      realEarnings2023: normalizeValue(row.Real_Earnings_2023_Dollars),
+      annualGrowthRate: normalizeValue(row.Annual_Growth_Rate),
+      color: getGenerationColor(row.Generation)
+    }))
+    .sort((a, b) => a.year - b.year);
+};
+
+/**
+ * Processes industry employment data by generation
+ * @param {Array<Object>} data - Raw industry data from CSV
+ * @param {string|null} generationFilter - Generation to filter by, or null for all
+ * @returns {Array<Object>} Processed data with industry, employment share, and generation
+ */
+export const processIndustryData = (data, generationFilter = null) => {
+  if (!Array.isArray(data)) {
+    console.warn('processIndustryData: Invalid data provided, expected array');
+    return [];
+  }
+
+  return data
+    .filter(row => !generationFilter || row.Generation === generationFilter)
+    .map(row => ({
+      generation: row.Generation,
+      industry: row.Industry,
+      employmentShare: normalizeValue(row.Employment_Share),
+      jobTypeCategory: row.Job_Type_Category,
+      color: getGenerationColor(row.Generation)
+    }))
+    .sort((a, b) => b.employmentShare - a.employmentShare);
+};
+
+/**
+ * Combines employment and earnings datasets for comprehensive generation analysis
+ * @param {Array<Object>} employmentData - Processed employment data
+ * @param {Array<Object>} earningsData - Processed earnings data
+ * @returns {Array<Object>} Combined dataset with employment and earnings indicators
+ */
+export const combineGenerationDatasets = (employmentData, earningsData) => {
+  if (!Array.isArray(employmentData) || !Array.isArray(earningsData)) {
+    console.warn('combineGenerationDatasets: Invalid data provided, expected arrays');
+    return [];
+  }
+
+  const combinedMap = new Map();
+  
+  // Add employment data
+  employmentData.forEach(row => {
+    const key = `${row.year}-${row.generation}`;
+    combinedMap.set(key, { 
+      year: row.year,
+      generation: row.generation,
+      unemploymentRate: row.unemploymentRate,
+      laborForceParticipation: row.laborForceParticipation,
+      laborForce: row.laborForce,
+      employed: row.employed,
+      unemployed: row.unemployed,
+      color: row.color
+    });
+  });
+  
+  // Add earnings data
+  earningsData.forEach(row => {
+    const key = `${row.year}-${row.generation}`;
+    if (combinedMap.has(key)) {
+      const existing = combinedMap.get(key);
+      existing.medianWeeklyEarnings = row.medianWeeklyEarnings;
+      existing.realEarnings2023 = row.realEarnings2023;
+      existing.annualGrowthRate = row.annualGrowthRate;
+    }
+  });
+  
+  return Array.from(combinedMap.values())
+    .filter(row => row.unemploymentRate !== undefined && row.medianWeeklyEarnings !== undefined)
+    .sort((a, b) => a.year - b.year || a.generation.localeCompare(b.generation));
+};
+
+/**
+ * Calculates generation comparison metrics
+ * @param {Array<Object>} data - Combined generation data
+ * @returns {Object} Comparison statistics by generation
+ */
+export const calculateGenerationMetrics = (data) => {
+  if (!Array.isArray(data)) {
+    console.warn('calculateGenerationMetrics: Invalid data provided, expected array');
+    return {};
+  }
+
+  const metrics = {};
+  const generations = ['Gen Z', 'Millennials', 'Gen X', 'Boomers'];
+  
+  generations.forEach(generation => {
+    const genData = data.filter(row => row.generation === generation);
+    if (genData.length === 0) return;
+    
+    // Calculate averages
+    const avgUnemployment = genData.reduce((sum, row) => sum + row.unemploymentRate, 0) / genData.length;
+    const avgEarnings = genData.reduce((sum, row) => sum + (row.medianWeeklyEarnings || 0), 0) / genData.length;
+    const avgParticipation = genData.reduce((sum, row) => sum + row.laborForceParticipation, 0) / genData.length;
+    
+    // Calculate trends (2023 vs earliest available year)
+    const sortedData = genData.sort((a, b) => a.year - b.year);
+    const firstYear = sortedData[0];
+    const lastYear = sortedData[sortedData.length - 1];
+    
+    metrics[generation] = {
+      averageUnemploymentRate: Math.round(avgUnemployment * 10) / 10,
+      averageWeeklyEarnings: Math.round(avgEarnings),
+      averageLaborParticipation: Math.round(avgParticipation * 10) / 10,
+      unemploymentTrend: lastYear.unemploymentRate - firstYear.unemploymentRate,
+      earningsTrend: (lastYear.medianWeeklyEarnings || 0) - (firstYear.medianWeeklyEarnings || 0),
+      participationTrend: lastYear.laborForceParticipation - firstYear.laborForceParticipation,
+      color: getGenerationColor(generation),
+      totalDataPoints: genData.length
+    };
+  });
+  
+  return metrics;
 };
 
 /**

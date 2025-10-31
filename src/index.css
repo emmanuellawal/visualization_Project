@@ -7,8 +7,12 @@
   --primary-bg: #0a0a0a;
   --secondary-bg: #1a1a1a;
   --card-bg: #1e2a44;
-  --accent-blue: #007bff;
-  --accent-blue-dark: #0056b3;
+  --accent-gen-z: #10f0a6;
+  --accent-millennial: #ff6b35;
+  --accent-gen-x: #4ecdc4;
+  --accent-boomer: #9b59b6;
+  --accent-purple: #8b5cf6;
+  --accent-blue: #3b82f6;
   --text-primary: #ffffff;
   --text-secondary: #e0e0e0;
   --text-muted: #6c757d;
@@ -79,7 +83,7 @@ p {
   }
 
   .card {
-    @apply bg-card-bg/80 backdrop-blur-lg border border-border-color/50 rounded-xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-border-color;
+    @apply bg-slate-800/80 backdrop-blur-lg border border-slate-600/50 rounded-xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-slate-500;
   }
 
   .card-hover {
@@ -87,11 +91,27 @@ p {
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text;
+    @apply bg-gradient-to-r from-emerald-400 via-purple-400 to-blue-400 text-transparent bg-clip-text;
   }
 
   .gradient-bg {
-    @apply bg-gradient-to-r from-blue-600 to-purple-600;
+    @apply bg-gradient-to-r from-emerald-500 via-purple-500 to-blue-500;
+  }
+
+  .gradient-gen-z {
+    @apply bg-gradient-to-r from-emerald-400 to-teal-400;
+  }
+
+  .gradient-millennial {
+    @apply bg-gradient-to-r from-orange-400 to-red-400;
+  }
+
+  .gradient-gen-x {
+    @apply bg-gradient-to-r from-cyan-400 to-blue-400;
+  }
+
+  .gradient-boomer {
+    @apply bg-gradient-to-r from-purple-400 to-pink-400;
   }
 
   .glass-effect {
@@ -103,6 +123,21 @@ p {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+}
+
+/* Enhanced Interactive Feedback */
+@layer utilities {
+  .highlight-section {
+    animation: highlightPulse 2s ease-in-out;
+  }
+
+  .state-changed {
+    animation: stateChange 0.5s ease-in-out;
+  }
+
+  .test-mode-indicator {
+    animation: testModePulse 2s ease-in-out infinite;
   }
 }
 
@@ -135,6 +170,41 @@ p {
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+@keyframes highlightPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+}
+
+@keyframes stateChange {
+  0% {
+    transform: scale(1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    transform: scale(1.05);
+    border-color: rgba(59, 130, 246, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes testModePulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
   }
 }
 
@@ -180,11 +250,71 @@ p {
   color: white;
 }
 
-/* Responsive Design */
+/* Enhanced Mobile Responsive Design */
 @media (max-width: 768px) {
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  
+  /* Mobile-specific button improvements */
+  .btn-primary, .btn-secondary {
+    min-height: 44px; /* Touch-friendly minimum size */
+    padding: 12px 16px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Mobile chart improvements */
+  .recharts-wrapper {
+    min-height: 300px;
+  }
+  
+  /* Mobile navigation improvements */
+  .tremor-TabList-root {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  
+  .tremor-Tab-root {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+  }
+
+  /* Mobile tooltip improvements */
+  .recharts-tooltip-wrapper {
+    max-width: 280px !important;
+    font-size: 14px !important;
+  }
+
+  /* Mobile state selector improvements */
+  select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 44px;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase touch targets */
+  button, select, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improve dropdown usability on touch devices */
+  select {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  /* Enhanced touch feedback */
+  button:active {
+    transform: scale(0.95);
+  }
+
+  /* Better touch scrolling */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -200,6 +330,12 @@ p {
   border: 1px solid var(--border-color) !important;
   border-radius: 8px !important;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Enhanced tooltip styling */
+.recharts-tooltip-wrapper {
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
 }
 
 /* Tremor Component Overrides */
@@ -220,4 +356,41 @@ p {
 .tremor-TabGroup-root .tremor-Tab-root[data-state="active"] {
   background: var(--accent-blue) !important;
   color: white !important;
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card {
+    border: 2px solid var(--text-primary);
+  }
+  
+  .btn-primary, .btn-secondary {
+    border: 2px solid var(--text-primary);
+  }
+}
+
+/* Print styles */
+@media print {
+  .btn-primary, .btn-secondary, 
+  .mobile-menu-container,
+  .tremor-TabList-root {
+    display: none !important;
+  }
+  
+  .card {
+    border: 1px solid #000;
+    background: white !important;
+    color: black !important;
+  }
 }

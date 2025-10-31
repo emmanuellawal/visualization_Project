@@ -1,72 +1,75 @@
-# Economic Mobility Analysis Dashboard
+# Generational Employment Trends Dashboard
 
 ## Overview
-This interactive dashboard visualizes the complex relationship between vehicle ownership patterns and housing costs across multiple states over three decades. The project combines extensive datasets on vehicle registrations, housing prices, and rental costs to provide insights into economic mobility trends.
+This interactive dashboard analyzes and compares employment challenges across different generations, with a special focus on understanding Gen Z's career crisis in relation to previous generations' experiences. The project combines comprehensive datasets from the Bureau of Labor Statistics to provide data-driven insights into generational employment patterns, unemployment rates, wage growth, and industry distribution.
 
 ## Key Features
-- Interactive data visualization with real-time state filtering
-- Comprehensive analysis of three key economic indicators:
-  - Motor vehicle registrations
-  - Housing price indices
-  - Rental cost indices
-- Dynamic charts showing temporal trends and correlations
-- Responsive design with modern UI/UX principles
+- Interactive data visualization with real-time generation filtering
+- Comprehensive analysis of three key employment indicators:
+  - Unemployment rates by generation
+  - Labor force participation trends
+  - Median weekly earnings progression
+- Industry employment distribution analysis
+- Dynamic charts showing temporal trends and generational comparisons
+- Responsive design optimized for Gen Z mobile-first behavior
 
 ## Technical Stack
 - React.js for frontend development
 - Recharts for data visualization
 - Tremor UI components
-- Tailwind CSS for styling
+- Tailwind CSS with Gen Z-inspired color palette
 
 ## Key Findings
 
 ### Data-Driven Insights
-1. **Inverse Correlation**
-   - Strong inverse relationship discovered between housing costs and vehicle ownership
-   - Higher housing costs correlate with lower vehicle ownership rates
-   - Pattern particularly pronounced in urban centers
+1. **Generational Employment Challenges**
+   - Gen Z faces higher unemployment rates compared to other generations at similar career stages
+   - Millennials experienced lasting impacts from the 2008 recession during their early careers
+   - Gen X shows more stable employment patterns throughout economic cycles
+   - Boomers maintained higher labor force participation into later ages
 
-2. **Geographic Variations**
-   - Urban areas show distinct patterns compared to rural regions
-   - Higher housing costs in urban areas correspond with lower vehicle ownership
-   - Suggests increased reliance on public transportation in high-cost areas
+2. **Industry Distribution Patterns**
+   - Gen Z is overrepresented in service sectors (restaurants, retail), making them vulnerable to economic shifts
+   - Millennials concentrated in professional services and healthcare
+   - Gen X and Boomers show more diverse industry representation
+   - Technology sector employment varies significantly by generation
 
 ### Policy Implications
 
-#### Transportation Planning
-- Areas with high housing costs require robust public transportation infrastructure
-- Need for integrated mobility solutions in high-cost housing areas
-- Evidence supports investment in alternative transportation options
+#### Workforce Development
+- Need for targeted training programs for Gen Z entering the job market
+- Skills gap addressing automation and technology changes
+- Support for transition from gig economy to stable employment
 
-#### Housing Policy
-- Data suggests need for integrated housing and transportation policies
-- Housing affordability directly impacts mobility choices
-- Recommendations for policy makers to consider transportation access in housing development
+#### Economic Policy
+- Data suggests need for generation-specific employment policies
+- Wage growth patterns indicate structural changes in career progression
+- Recommendations for addressing generational wealth and opportunity gaps
 
 ## Recommendations
 
-1. **Transit-Oriented Development**
-   - Prioritize development near public transportation hubs
-   - Focus on affordable housing options with reduced vehicle dependency
-   - Integrate mixed-use development principles
+1. **Generation-Specific Programs**
+   - Develop targeted employment programs for Gen Z career development
+   - Address unique challenges faced by each generation in the current economy
+   - Support intergenerational mentorship and knowledge transfer programs
 
-2. **Mixed Mobility Solutions**
-   - Implement comprehensive mobility strategies
-   - Include public transit, bike-sharing, and pedestrian infrastructure
-   - Focus on reducing car dependency in high-cost areas
+2. **Skills-Based Training**
+   - Implement comprehensive digital skills training for emerging technologies
+   - Include soft skills development and professional networking opportunities
+   - Focus on bridging the gap between education and workplace expectations
 
-3. **Affordable Housing Initiatives**
-   - Develop policies promoting affordable housing near employment centers
-   - Focus on transit corridor development
-   - Consider mobility access in housing development planning
+3. **Policy Reform Initiatives**
+   - Develop policies addressing gig economy worker protections
+   - Focus on portable benefits and career pathway development
+   - Consider generational impacts in economic and labor policy decisions
 
 ## Conclusions
-The analysis reveals a clear and significant relationship between housing affordability and vehicle ownership patterns in urban areas. As housing costs rise, residents are more likely to forgo vehicle ownership, potentially due to financial constraints and the availability of alternative transportation options. These findings emphasize the need for integrated urban planning approaches that consider both housing and transportation policies to ensure equitable access to mobility and housing options for all residents.
+The analysis reveals significant generational differences in employment experiences, with each generation facing unique challenges shaped by the economic conditions of their time. Gen Z's entry into the workforce during and after the COVID-19 pandemic has created distinct patterns different from previous generations. These findings emphasize the need for targeted employment policies and support systems that recognize generational differences while promoting equitable career opportunities for all workers.
 
 ## Data Sources
-- Vehicle registration data from state DMV records
-- Housing price indices from real estate market data
-- Rental cost indices from housing market surveys
+- Employment data from Bureau of Labor Statistics Current Population Survey
+- Earnings data from BLS Employment and Earnings reports
+- Industry employment data from BLS Occupational Employment and Wage Statistics
 
 ## Installation and Usage
 
@@ -84,6 +87,12 @@ npm install
 ```bash
 npm run dev
 ```
+
+## Testing
+The project includes comprehensive testing functionality:
+- Press 'T' to toggle test mode
+- Press 'P' to open the testing panel
+- All major features include automated testing coverage
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.

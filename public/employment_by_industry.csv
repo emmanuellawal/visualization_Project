@@ -1,0 +1,49 @@
+Year,Generation,Age_Group,Industry,Employment_Share,Job_Type_Category
+2023,Gen Z,18-28,Accommodation and Food Services,18.2,Service
+2023,Gen Z,18-28,Retail Trade,16.8,Service
+2023,Gen Z,18-28,Professional and Business Services,12.4,Professional
+2023,Gen Z,18-28,Healthcare and Social Assistance,11.9,Healthcare
+2023,Gen Z,18-28,Educational Services,8.7,Education
+2023,Gen Z,18-28,Transportation and Warehousing,7.3,Service
+2023,Gen Z,18-28,Manufacturing,6.2,Manufacturing
+2023,Gen Z,18-28,Construction,4.8,Construction
+2023,Gen Z,18-28,Information,3.9,Technology
+2023,Gen Z,18-28,Financial Activities,3.6,Professional
+2023,Gen Z,18-28,Government,3.4,Government
+2023,Gen Z,18-28,Other Services,2.8,Service
+2023,Millennials,28-42,Professional and Business Services,16.8,Professional
+2023,Millennials,28-42,Healthcare and Social Assistance,14.2,Healthcare
+2023,Millennials,28-42,Educational Services,12.1,Education
+2023,Millennials,28-42,Manufacturing,9.8,Manufacturing
+2023,Millennials,28-42,Retail Trade,9.4,Service
+2023,Millennials,28-42,Financial Activities,8.9,Professional
+2023,Millennials,28-42,Government,8.2,Government
+2023,Millennials,28-42,Information,6.7,Technology
+2023,Millennials,28-42,Transportation and Warehousing,5.4,Service
+2023,Millennials,28-42,Construction,4.9,Construction
+2023,Millennials,28-42,Accommodation and Food Services,2.1,Service
+2023,Millennials,28-42,Other Services,1.5,Service
+2023,Gen X,42-58,Professional and Business Services,15.9,Professional
+2023,Gen X,42-58,Healthcare and Social Assistance,15.2,Healthcare
+2023,Gen X,42-58,Manufacturing,12.8,Manufacturing
+2023,Gen X,42-58,Educational Services,11.4,Education
+2023,Gen X,42-58,Government,10.2,Government
+2023,Gen X,42-58,Financial Activities,9.8,Professional
+2023,Gen X,42-58,Retail Trade,7.3,Service
+2023,Gen X,42-58,Information,6.1,Technology
+2023,Gen X,42-58,Transportation and Warehousing,4.8,Service
+2023,Gen X,42-58,Construction,3.9,Construction
+2023,Gen X,42-58,Accommodation and Food Services,1.8,Service
+2023,Gen X,42-58,Other Services,0.8,Service
+2023,Boomers,58-77,Healthcare and Social Assistance,18.9,Healthcare
+2023,Boomers,58-77,Educational Services,16.2,Education
+2023,Boomers,58-77,Government,14.8,Government
+2023,Boomers,58-77,Professional and Business Services,13.1,Professional
+2023,Boomers,58-77,Manufacturing,11.2,Manufacturing
+2023,Boomers,58-77,Financial Activities,8.9,Professional
+2023,Boomers,58-77,Retail Trade,6.8,Service
+2023,Boomers,58-77,Transportation and Warehousing,3.4,Service
+2023,Boomers,58-77,Information,2.9,Technology
+2023,Boomers,58-77,Construction,2.1,Construction
+2023,Boomers,58-77,Accommodation and Food Services,1.2,Service
+2023,Boomers,58-77,Other Services,0.5,Service

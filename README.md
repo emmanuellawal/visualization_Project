@@ -1,104 +1,79 @@
-# Generational Employment Trends Dashboard
+# Cohort — Workforce in perspective
 
-## Overview
-This interactive dashboard analyzes and compares employment challenges across different generations, with a special focus on understanding Gen Z's career crisis in relation to previous generations' experiences. The project combines comprehensive datasets from the Bureau of Labor Statistics to provide data-driven insights into generational employment patterns, unemployment rates, wage growth, and industry distribution.
+A responsive employment data explorer designed and built by [Emmanuel Lawal](https://emmanuellawal.dev). Compare four generation labels across unemployment, weekly earnings, labor force participation, and industry employment.
 
-## Key Features
-- Interactive data visualization with real-time generation filtering
-- Comprehensive analysis of three key employment indicators:
-  - Unemployment rates by generation
-  - Labor force participation trends
-  - Median weekly earnings progression
-- Industry employment distribution analysis
-- Dynamic charts showing temporal trends and generational comparisons
-- Responsive design optimized for Gen Z mobile-first behavior
+![Cohort — Every generation. A different working life.](public/social-card.png)
 
-## Technical Stack
-- React.js for frontend development
-- Recharts for data visualization
-- Tremor UI components
-- Tailwind CSS with Gen Z-inspired color palette
+This is a portfolio demonstration, not an official labor statistics product. The archived datasets have unverified provenance and inconsistent age ranges. The application explains these limitations before presenting the charts. See [data provenance](docs/data-provenance.md).
 
-## Key Findings
+## Run locally
 
-### Data-Driven Insights
-1. **Generational Employment Challenges**
-   - Gen Z faces higher unemployment rates compared to other generations at similar career stages
-   - Millennials experienced lasting impacts from the 2008 recession during their early careers
-   - Gen X shows more stable employment patterns throughout economic cycles
-   - Boomers maintained higher labor force participation into later ages
+Use **Node 24 LTS** (also specified in `.nvmrc`). Older Node 20.18 installations cannot run the current Vite toolchain.
 
-2. **Industry Distribution Patterns**
-   - Gen Z is overrepresented in service sectors (restaurants, retail), making them vulnerable to economic shifts
-   - Millennials concentrated in professional services and healthcare
-   - Gen X and Boomers show more diverse industry representation
-   - Technology sector employment varies significantly by generation
-
-### Policy Implications
-
-#### Workforce Development
-- Need for targeted training programs for Gen Z entering the job market
-- Skills gap addressing automation and technology changes
-- Support for transition from gig economy to stable employment
-
-#### Economic Policy
-- Data suggests need for generation-specific employment policies
-- Wage growth patterns indicate structural changes in career progression
-- Recommendations for addressing generational wealth and opportunity gaps
-
-## Recommendations
-
-1. **Generation-Specific Programs**
-   - Develop targeted employment programs for Gen Z career development
-   - Address unique challenges faced by each generation in the current economy
-   - Support intergenerational mentorship and knowledge transfer programs
-
-2. **Skills-Based Training**
-   - Implement comprehensive digital skills training for emerging technologies
-   - Include soft skills development and professional networking opportunities
-   - Focus on bridging the gap between education and workplace expectations
-
-3. **Policy Reform Initiatives**
-   - Develop policies addressing gig economy worker protections
-   - Focus on portable benefits and career pathway development
-   - Consider generational impacts in economic and labor policy decisions
-
-## Conclusions
-The analysis reveals significant generational differences in employment experiences, with each generation facing unique challenges shaped by the economic conditions of their time. Gen Z's entry into the workforce during and after the COVID-19 pandemic has created distinct patterns different from previous generations. These findings emphasize the need for targeted employment policies and support systems that recognize generational differences while promoting equitable career opportunities for all workers.
-
-## Data Sources
-- Employment data from Bureau of Labor Statistics Current Population Survey
-- Earnings data from BLS Employment and Earnings reports
-- Industry employment data from BLS Occupational Employment and Wage Statistics
-
-## Installation and Usage
-
-1. Clone the repository:
-```bash
-git clone [repository-url]
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Run the development server:
-```bash
+```sh
+nvm use
+npm ci
 npm run dev
 ```
 
-## Testing
-The project includes comprehensive testing functionality:
-- Press 'T' to toggle test mode
-- Press 'P' to open the testing panel
-- All major features include automated testing coverage
+Open the local URL printed by Vite, normally `http://localhost:3000`.
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+```sh
+npm run check        # ESLint, data tests, TypeScript, production build
+npx playwright install chromium
+npm run test:e2e     # Desktop and mobile flows, error recovery, axe accessibility checks
+npm run preview     # Serve dist locally
+```
 
-## Contact
-For questions about the analysis or collaboration opportunities, please contact Emmanuel Lawal.
+The browser suite tests the production build, so run `npm run build` before `npm run test:e2e`. Screenshots are saved in `artifacts/`; failure traces and reports are local ignored output. CI performs the same checks on pushes and pull requests.
 
----
-© 2025 Emmanuel Lawal. All data sourced from public records.
+## Explore
+
+- Compare any combination of four generations; at least one remains selected.
+- Filter the available observation years from 2000 to 2023.
+- Switch between unemployment, earnings, and participation. Earnings support nominal or supplied 2023-dollar values.
+- Inspect chart values with a pointer or keyboard-operated year buttons. Line dash patterns supplement color.
+- Switch to a semantic table with the same filtered values.
+- Share the current measure, generation selection, period, and price basis by URL. A manual copy field is available when clipboard access fails.
+- Export the filtered measure as CSV with units and a dataset-status warning.
+- Explore all 12 industries in a separate 2023 snapshot.
+- Read the source limitations and download the original CSV files.
+
+## Engineering decisions
+
+- **React 19 + TypeScript:** a typed data model and explicit loading, error, and ready states.
+- **Vite 8:** fast local development and static production output.
+- **Custom SVG charts:** responsive chart geometry, true year spacing, zero-based rate axes, visible missing observations, distinct line styles, and matching accessible tables. No chart-library dependency.
+- **Papa Parse:** strict CSV validation, duplicate-key detection, generation/year joins, and safe CSV serialization. Invalid numbers are not coerced to zero.
+- **Plain CSS:** a responsive design system with native controls, visible focus, reduced-motion support, and print styles.
+- **Locally bundled DM Sans:** no runtime third-party font request.
+- **Vitest, Playwright, and axe:** checks cover data correctness and real user behavior; there is no simulated in-app testing panel.
+
+## Structure
+
+```text
+src/App.tsx                       Page shell, brand, methodology
+src/components/Explorer.tsx       Filters, comparisons, sharing, export
+src/components/IndustryPanel.tsx  Independent industry snapshot
+src/components/TrendChart.tsx     SVG trend chart and sparklines
+src/components/ErrorBoundary.tsx Render failure recovery
+src/hooks/useDataset.ts          Abortable fetch, validation, retry
+src/lib/data.ts                  Data model, parser, filters, formatting, export
+src/index.css                    Responsive visual system
+public/*_by_*.csv                Original archived demonstration datasets
+tests/data.test.ts               Data integrity and share/export checks
+tests/e2e/explorer.spec.ts        Desktop/mobile browser flows and accessibility
+docs/                           Data notes and portfolio case study
+```
+
+## Deployment
+
+Build with `npm ci && npm run build` on Node 24. Serve `dist/` from the site root. The existing Vercel configuration is retained; set its runtime to Node 24, build command to `npm run build`, and output directory to `dist`.
+
+No backend, API keys, or environment secrets are needed. Query parameters carry shareable state. This implementation has not been published automatically.
+
+## Before using this as research
+
+Replace the archived files with traceable source records; document the exact series IDs, retrieval date, cohort definitions, transformations, denominators, and inflation methodology. Validate the model and update its tests. Do not relabel these files as verified BLS data.
+
+The unrelated legacy housing, vehicle, and rent files are retained for historical reference but are not used by this explorer. Original source code is recoverable from Git history. No license grant is asserted because this repository has no LICENSE file.
